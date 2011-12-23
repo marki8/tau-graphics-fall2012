@@ -1,6 +1,7 @@
 package GeometricPrimitives;
 
 import raytracer.Auxiliary;
+import raytracer.IntersectioPoint;
 import raytracer.Ray;
 import raytracer.Vector;
 
@@ -49,9 +50,9 @@ public class Rectangle extends GeometricPrimitive{
 	
 	
 	@Override
-	public Vector getIntersection(Ray r) {
+	public IntersectioPoint getIntersection(Ray r) {
 		
-		Vector pointOnHalfPlane = Auxiliary.findIntersectionOfVectorAndHalfPlane(r, findNormal(), p1);
+		Vector pointOnHalfPlane = Auxiliary.findIntersectionOfVectorAndHalfPlane(r, getNormal(), p1);
 		
 		// TODO: DEAL WITH ALL THE EDGE CASES INFINITY ETC
 		
@@ -63,7 +64,7 @@ public class Rectangle extends GeometricPrimitive{
 		}
 		
 		if(pointOnRect(pointOnHalfPlane)){
-			return pointOnHalfPlane;
+			return new IntersectioPoint(this, pointOnHalfPlane, getNormal());
 		}
 		
 		else{
@@ -89,11 +90,6 @@ public class Rectangle extends GeometricPrimitive{
 		double v = (v0v0*v2v1 - v0v1*v2v0) / (v0v0*v1v1 - v0v1*v1v0);
 
 		return (u >= 0) && (v >= 0) && (u <= 1) && (v <= 1); 
-	}
-
-	@Override
-	public Vector findNormal() {
-		return normal;
 	}
 
 	public Vector getNormal() {
