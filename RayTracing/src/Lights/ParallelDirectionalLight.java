@@ -1,5 +1,6 @@
 package Lights;
 
+import GeometricPrimitives.GeometricPrimitive;
 import raytracer.Intersection;
 import raytracer.Ray;
 import raytracer.Scene;
@@ -27,10 +28,10 @@ public class ParallelDirectionalLight extends Light {
 
 	@Override
 	public Vector findLightImpact(Scene scene, Ray ray, Intersection hit) {
-		
+
 		Vector towardsLight = ray.getDirection().scalarMult(-1);
 		Ray rayFromObjToLight = new Ray(hit.getMinIntPoint().getLocation(), towardsLight);
-		Intersection objToLightInt = Scene.findInteresction(scene, rayFromObjToLight);
+		Intersection objToLightInt = Scene.findInteresction(scene, rayFromObjToLight, hit.getMinIntPoint().getGeom());
 		
 		if(objToLightInt.getMinIntPoint() == null) {
 			return calcColor(scene, ray, hit, towardsLight);

@@ -56,10 +56,7 @@ public class Rectangle extends GeometricPrimitive{
 		
 		// TODO: DEAL WITH ALL THE EDGE CASES INFINITY ETC
 		
-		if(pointOnHalfPlane.equals(new Vector(Double.MIN_VALUE,Double.MIN_VALUE,Double.MIN_VALUE))){
-			return null;
-		}
-		if(pointOnHalfPlane.equals(new Vector(Double.MAX_VALUE,Double.MAX_VALUE,Double.MAX_VALUE))){
+		if(pointOnHalfPlane == null){
 			return null;
 		}
 		

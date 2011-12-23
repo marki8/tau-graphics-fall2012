@@ -15,7 +15,7 @@ public class Circle extends GeometricPrimitive {
 	public Circle(Vector center, Vector normal, double radius) {
 		super();
 		this.center = center;
-		this.normal = normal;
+		this.normal = normal.normalize();
 		this.radius = radius;
 	}
 
@@ -23,6 +23,7 @@ public class Circle extends GeometricPrimitive {
 	@Override
 	public IntersectioPoint getIntersection(Ray r) {
 		Vector intPoint = Auxiliary.findIntersectionOfVectorAndHalfPlane(r, getNormal(), getCenter());
+		if ( intPoint == null ) return null;
 		if ( intPoint.distance(center) <= getRadius() )
 			return new IntersectioPoint(this, intPoint, getNormal());
 		return null;
