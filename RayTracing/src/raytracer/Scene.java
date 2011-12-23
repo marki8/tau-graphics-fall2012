@@ -69,7 +69,7 @@ public class Scene {
 		Intersection hit = findInteresction(scene, ray);
 		hit.updateMin();
 		if ( hit.noIntersection() )
-			return BackgroundColor;
+			return BackgroundColor; // TODO: return background image pixel
 		
 		for(Light l: lightList){
 			Vector impact = l.findLightImpact(scene, ray, hit);
