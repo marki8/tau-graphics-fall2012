@@ -33,7 +33,7 @@ public class ParallelDirectionalLight extends Light {
 		Ray rayFromObjToLight = new Ray(hit.getMinIntPoint().getLocation(), towardsLight);
 		Intersection objToLightInt = Scene.findInteresction(scene, rayFromObjToLight, hit.getMinIntPoint().getGeom());
 		
-		if(objToLightInt.getMinIntPoint() == null) {
+		if(objToLightInt.getMinIntPoint() == null) { // nothing intersects with the ray from the object to the light
 			return calcColor(scene, ray, hit, towardsLight);
 			
 		}

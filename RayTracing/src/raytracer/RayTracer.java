@@ -55,9 +55,9 @@ public class RayTracer {
 		
 		
 		Vector v0 = new Vector(-30, 30, -300);
-		Vector v2 = new Vector(30, 30, -300);
-		Vector v1 = new Vector(-30, -30, -300);
-//		Rectangle rec = new Rectangle(v0,v1,v2);
+		Vector v1 = new Vector(30, 30, -300);
+		Vector v2 = new Vector(-30, -30, -300);
+//		Rectangle rec = new Rectangle(v0,v2,v1);
 //		Surface s1 = new Surface();
 //		s1.setMtlDiffuse(new Vector(0.98,0.48,0.4));
 //		s1.setMtlSpecular(new Vector(0.7,0.7,0.7));
@@ -84,11 +84,8 @@ public class RayTracer {
 //		rec2.setSurface(s2);
 //		m_scene.addGeomObject(rec2);
 		
-		v0 = new Vector(0, 30, -400);
-		v1 = new Vector(150, 30, -400);
-		v2 = new Vector(-100, -30, -400);
-		Vector v3 = new Vector(0, 30, -300);
-		Box box = new Box(v0,v1,v2,v3);
+		Vector v3 = new Vector(-10, 50, -360);
+		Box box = new Box(v0,v2,v1,v3);
 		Surface s2 = new Surface();
 		s2.setMtlDiffuse(new Vector(0.5,0.6,0.7));
 		box.setSurface(s2);
