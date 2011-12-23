@@ -67,7 +67,6 @@ public class Scene {
 		Ray ray = constructRayThroughPixel(x, y);
 		
 		Intersection hit = findInteresction(scene, ray);
-		hit.updateMin();
 		if ( hit.noIntersection() )
 			return BackgroundColor;
 		
@@ -86,11 +85,9 @@ public class Scene {
 		Intersection intersection = new Intersection(scene.cam.getEye());
 		for ( GeometricPrimitive g : scene.geoList ) {
 			
-			Vector intPoint = g.getIntersection(ray);
+			IntersectioPoint intPoint = g.getIntersection(ray);
 			if ( intPoint != null )
-				intersection.addPoint(g, intPoint);
-			
-			
+				intersection.addPoint(intPoint);
 		}
 		return intersection;
 	}

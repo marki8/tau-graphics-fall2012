@@ -23,11 +23,11 @@ public abstract class Light {
 	public Vector calcColor(Scene scene, Ray ray, Intersection hit, Vector L) {
 		
 		Vector color = new Vector(0,0,0);
-		Surface surface = hit.getMinIntGeom().getSurface();
+		Surface surface = hit.getMinIntPoint().getGeom().getSurface();
 		Vector Kd = surface.getMtlDiffuse(); // ONLY TRUE IF FLAT!!!
 		Vector Ks = surface.getMtlSpecular();
 		double n = surface.getMtlShininess();
-		Vector N = hit.getMinIntGeom().findNormal().normalize();
+		Vector N = hit.getMinIntPoint().getNormal().normalize();
 		Vector R = Vector.vectorReflection(L,N);
 		Vector V = ray.getDirection().scalarMult(-1).normalize();
 		double VR = V.dotProduct(R);

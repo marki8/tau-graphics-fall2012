@@ -1,77 +1,94 @@
 package GeometricPrimitives;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import raytracer.IntersectioPoint;
+import raytracer.Intersection;
 import raytracer.Ray;
 import raytracer.Vector;
 
 public class Box extends GeometricPrimitive {
 
-	private Rectangle r0, r1, r2, r3, r4, r5;
+	private List<Rectangle> rectList;
+	private Vector p0, p1, p2, p3;
 	
-	public Box(Rectangle r0,Rectangle r1,Rectangle r2,Rectangle r3,Rectangle r4,Rectangle r5){
-		this.setR0(r0);
-		this.setR1(r1);
-		this.setR2(r2);
-		this.setR3(r3);
-		this.setR4(r4);
-		this.setR5(r5);
+	/**
+	 * Construct the hexahedron defined by (p1-p0)x(p2-p0)x(p3-p0)
+	 * @param p0
+	 * @param p1
+	 * @param p2
+	 * @param p3
+	 */
+	public Box(Vector p0, Vector p1, Vector p2, Vector p3){
+		this.setP0(p0);
+		this.setP1(p1);
+		this.setP2(p2);
+		this.setP3(p3);
+		rectList = new ArrayList<>(6);
+		
+		// Immediate sides
+		rectList.add( new Rectangle(p0, p2, p1) );
+		rectList.add( new Rectangle(p0, p1, p3) );
+		rectList.add( new Rectangle(p0, p3, p2) );
+		
+		// edges
+		Vector p1p0 = p1.substract(p0);
+		Vector p2p0 = p2.substract(p0);
+		Vector p3p0 = p3.substract(p0);
+		
+		// calculated sides
+		rectList.add( new Rectangle(p3, p3.add(p2p0), p2.add(p1p0)) );
+		rectList.add( new Rectangle(p1, p2.add(p1p0), p3.add(p1p0)) );
+		rectList.add( new Rectangle(p3, p3.add(p1p0), p3.add(p2p0)) );
 	}
 	
 	@Override
-	public Vector getIntersection(Ray r) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Vector findNormal() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Rectangle getR0() {
-		return r0;
-	}
-
-	public void setR0(Rectangle r0) {
-		this.r0 = r0;
-	}
-
-	public Rectangle getR1() {
-		return r1;
-	}
-
-	public void setR1(Rectangle r1) {
-		this.r1 = r1;
-	}
-
-	public Rectangle getR2() {
-		return r2;
-	}
-
-	public void setR2(Rectangle r2) {
-		this.r2 = r2;
-	}
-
-	public Rectangle getR3() {
-		return r3;
-	}
-	public void setR3(Rectangle r3) {
-		this.r3 = r3;
+	public IntersectioPoint getIntersection(Ray r) {
+		Intersection hit = new Intersection(r.getOrigin());
+		for ( Rectangle rect : getRectList() ){
+			IntersectioPoint intPoint = rect.getIntersection(r);
+			if ( intPoint != null ){
+				hit.addPoint(intPoint);
+			}
+		}
+		return hit.getMinIntPoint();
 	}
 	
-	public Rectangle getR4() {
-		return r4;
+	public List<Rectangle> getRectList() {
+		return rectList;
 	}
 
-	public void setR4(Rectangle r4) {
-		this.r4 = r4;
+	public Vector getP0() {
+		return p0;
 	}
 
-	public Rectangle getR5() {
-		return r5;
+	public void setP0(Vector p0) {
+		this.p0 = p0;
 	}
 
-	public void setR5(Rectangle r5) {
-		this.r5 = r5;
+	public Vector getP1() {
+		return p1;
 	}
+
+	public void setP1(Vector p1) {
+		this.p1 = p1;
+	}
+
+	public Vector getP2() {
+		return p2;
+	}
+
+	public void setP2(Vector p2) {
+		this.p2 = p2;
+	}
+
+	public Vector getP3() {
+		return p3;
+	}
+
+	public void setP3(Vector p3) {
+		this.p3 = p3;
+	}
+
 }

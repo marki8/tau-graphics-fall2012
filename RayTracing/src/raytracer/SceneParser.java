@@ -103,16 +103,16 @@ public class SceneParser {
 
 	private Object addObject(String obj) {
 		if(obj.equals("scene")) return new Scene();
-		if(obj.equals("camera")) return new Camera();
-		if(obj.equals("light-directed")) return new ParallelDirectionalLight();
-		if(obj.equals("light-point:")) return new PointLight();
-		//if(obj.equals("light-area")) return new ;
-		if(obj.equals("rectangle")) return new Rectangle();
-		//if(obj.equals("disc")) return new ;
-		if(obj.equals("sphere")) return new Sphere();
-		if(obj.equals("box")) return new Box();
-		if(obj.equals("cylinder")) return new Cylinder();
-		
+//		if(obj.equals("camera")) return new Camera();
+//		if(obj.equals("light-directed")) return new ParallelDirectionalLight();
+//		if(obj.equals("light-point:")) return new PointLight();
+//		//if(obj.equals("light-area")) return new ;
+//		if(obj.equals("rectangle")) return new Rectangle();
+//		//if(obj.equals("disc")) return new ;
+//		if(obj.equals("sphere")) return new Sphere();
+//		if(obj.equals("box")) return new Box();
+//		if(obj.equals("cylinder")) return new Cylinder();
+		return null;
 	}
 
 
