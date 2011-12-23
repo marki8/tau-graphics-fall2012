@@ -82,9 +82,22 @@ public class Scene {
 	}
 
 	public static Intersection findInteresction(Scene scene, Ray ray) {
+//		Intersection intersection = new Intersection(ray.getOrigin());
+//		for ( GeometricPrimitive g : scene.geoList ) {
+//			
+//			IntersectioPoint intPoint = g.getIntersection(ray);
+//			if ( intPoint != null )
+//				intersection.addPoint(intPoint);
+//		}
+//		return intersection;
+		return findInteresction(scene, ray, null);
+	}
+
+	public static Intersection findInteresction(Scene scene, Ray ray, GeometricPrimitive origin) {
 		Intersection intersection = new Intersection(ray.getOrigin());
 		for ( GeometricPrimitive g : scene.geoList ) {
-			
+			if ( (origin != null) && (g == origin) )
+				continue;
 			IntersectioPoint intPoint = g.getIntersection(ray);
 			if ( intPoint != null )
 				intersection.addPoint(intPoint);

@@ -9,12 +9,17 @@ public class Auxiliary {
 		
 		/*the line starts inside the plane and is parallel to the plane*/
 		if(denominator == 0 && numerator == 0){
-			return new Vector(Double.MIN_VALUE,Double.MIN_VALUE,Double.MIN_VALUE);
+			return null;
 		}
 		
 		/*the line starts outside the plane and is parallel to the plane, there is no intersection*/
 		else if(denominator == 0){
-			return new Vector(Double.MAX_VALUE,Double.MAX_VALUE,Double.MAX_VALUE);
+			return null;
+		}
+		
+		/* intersection point is in the opposite direction of the ray */
+		else if ( numerator / denominator < 0 ) {
+			return null;
 		}
 		
 		/* the line intersects the plane once and returned value represents the intersection as the distance along the line from ray origin */
