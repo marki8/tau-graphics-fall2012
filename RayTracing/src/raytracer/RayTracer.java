@@ -52,9 +52,9 @@ public class RayTracer {
 		// TO-ADD: possibly add post-parse scene initializations
 		
 		
-		/*Vector v0 = new Vector(-30, 30, -300);
-		Vector v1 = new Vector(30, 30, -300);
-		Vector v2 = new Vector(-30, -30, -300);
+		Vector v0 = new Vector(-30, 30, -300);
+		Vector v2 = new Vector(30, 30, -300);
+		Vector v1 = new Vector(-30, -30, -300);
 		Rectangle rec = new Rectangle(v0,v1,v2);
 		Surface s1 = new Surface();
 		s1.setMtlDiffuse(new Vector(0.98,0.48,0.4));
@@ -63,14 +63,14 @@ public class RayTracer {
 		rec.setSurface(s1);
 		m_scene.addGeomObject(rec);
 		
-		v0 = new Vector(0, 30, -400);
-		v1 = new Vector(150, 30, -400);
-		v2 = new Vector(-100, -30, -400);
-		Rectangle rec2 = new Rectangle(v0,v1,v2);
-		Surface s2 = new Surface();
-		s2.setMtlDiffuse(new Vector(0.5,0.6,0.7));
-		rec2.setSurface(s2);
-		m_scene.addGeomObject(rec2);*/
+//		v0 = new Vector(0, 30, -400);
+//		v1 = new Vector(150, 30, -400);
+//		v2 = new Vector(-100, -30, -400);
+//		Rectangle rec2 = new Rectangle(v0,v1,v2);
+//		Surface s2 = new Surface();
+//		s2.setMtlDiffuse(new Vector(0.5,0.6,0.7));
+//		rec2.setSurface(s2);
+//		m_scene.addGeomObject(rec2);
 		
 		
 		ParallelDirectionalLight l1 = new ParallelDirectionalLight(new Vector(0,0,-1));

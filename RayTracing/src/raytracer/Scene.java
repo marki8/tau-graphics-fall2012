@@ -82,7 +82,7 @@ public class Scene {
 	}
 
 	public static Intersection findInteresction(Scene scene, Ray ray) {
-		Intersection intersection = new Intersection(scene.cam.getEye());
+		Intersection intersection = new Intersection(ray.getOrigin());
 		for ( GeometricPrimitive g : scene.geoList ) {
 			
 			IntersectioPoint intPoint = g.getIntersection(ray);
