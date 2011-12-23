@@ -33,7 +33,7 @@ public class RayTracer {
 	
 
 	
-	void renderTo(ImageData dat, Canvas canvas) throws Parser.ParseException
+	void renderTo(ImageData dat, Canvas canvas) throws Parser.ParseException, IOException
 	{
 		// TO-ADD: initialize your scene object
 		Scene m_scene = new Scene();
@@ -41,9 +41,9 @@ public class RayTracer {
 		// probably need to set its size before parsing.
 
 //		try {
-//			// TO-ADD: instantiate your Parser inherited class and invoke it.
-//			SceneParser f = new SceneParser(m_scene);
-//			f.parse(new StringReader(m_sceneText.getText()));
+			// TO-ADD: instantiate your Parser inherited class and invoke it.
+			SceneParser f = new SceneParser(m_scene);
+			f.parse(new BufferedReader(new StringReader(m_sceneText.getText())));
 //			throw new IOException();
 //		} catch (IOException e) {
 //			e.printStackTrace();
@@ -52,7 +52,7 @@ public class RayTracer {
 		// TO-ADD: possibly add post-parse scene initializations
 		
 		
-		Vector v0 = new Vector(-30, 30, -300);
+		/*Vector v0 = new Vector(-30, 30, -300);
 		Vector v1 = new Vector(30, 30, -300);
 		Vector v2 = new Vector(-30, -30, -300);
 		Rectangle rec = new Rectangle(v0,v1,v2);
@@ -70,7 +70,7 @@ public class RayTracer {
 		Surface s2 = new Surface();
 		s2.setMtlDiffuse(new Vector(0.5,0.6,0.7));
 		rec2.setSurface(s2);
-		m_scene.addGeomObject(rec2);
+		m_scene.addGeomObject(rec2);*/
 		
 		
 		ParallelDirectionalLight l1 = new ParallelDirectionalLight(new Vector(0,0,-1));
@@ -199,7 +199,7 @@ public class RayTracer {
 				try {
 					m_imgdat = new ImageData(m_rect.width, m_rect.height, 24, new PaletteData(0xFF0000 , 0xFF00 , 0xFF));
 					renderTo(m_imgdat, canvas);
-				} catch (Parser.ParseException e) {
+				} catch (Parser.ParseException | IOException e) {
 					System.out.println("Error Parsing text: " + e.getMessage());
 				}					
 			}
