@@ -52,7 +52,10 @@ public class Box extends GeometricPrimitive {
 				hit.addPoint(intPoint);
 			}
 		}
-		return hit.getMinIntPoint();
+		IntersectioPoint rectInt = hit.getMinIntPoint();
+		if ( rectInt == null )
+			return null;
+		return new IntersectioPoint(this, rectInt.getLocation(), rectInt.getNormal());
 	}
 	
 	public List<Rectangle> getRectList() {
