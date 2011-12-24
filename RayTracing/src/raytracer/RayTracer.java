@@ -38,14 +38,14 @@ public class RayTracer {
 	void renderTo(ImageData dat, Canvas canvas) throws Parser.ParseException, IOException
 	{
 		// TO-ADD: initialize your scene object
-		Scene m_scene = new Scene(dat.height, dat.width);
+//		Scene m_scene = new Scene(dat.height, dat.width);
 		// probably need to set its size before parsing.
 
 //		try {
 			// TO-ADD: instantiate your Parser inherited class and invoke it.
-			//SceneParser f = new SceneParser(m_scene);
-//			SceneParser f = new SceneParser();
-//			Scene m_scene = f.parse(new BufferedReader(new StringReader(m_sceneText.getText())), dat.height, dat.width );
+//			SceneParser f = new SceneParser(m_scene);
+			SceneParser f = new SceneParser();
+			Scene m_scene = f.parse(new BufferedReader(new StringReader(m_sceneText.getText())), dat.height, dat.width );
 //			throw new IOException();
 //		} catch (IOException e) {
 //			e.printStackTrace();
@@ -54,9 +54,9 @@ public class RayTracer {
 		// TO-ADD: possibly add post-parse scene initializations
 		
 		
-		Vector v0 = new Vector(-30, 30, -300);
-		Vector v1 = new Vector(30, 30, -300);
-		Vector v2 = new Vector(-30, -30, -300);
+//		Vector v0 = new Vector(-30, 30, -300);
+//		Vector v1 = new Vector(30, 30, -300);
+//		Vector v2 = new Vector(-30, -30, -300);
 //		Rectangle rec = new Rectangle(v0,v2,v1);
 //		Surface s1 = new Surface();
 //		s1.setMtlDiffuse(new Vector(0.98,0.48,0.4));
@@ -84,16 +84,16 @@ public class RayTracer {
 //		rec2.setSurface(s2);
 //		m_scene.addGeomObject(rec2);
 		
-		Vector v3 = new Vector(-10, 50, -360);
-		Box box = new Box(v0,v2,v1,v3);
-		Surface s2 = new Surface();
-		s2.setMtlDiffuse(new Vector(0.5,0.6,0.7));
-		box.setSurface(s2);
-		m_scene.addGeomObject(box);
-		
-		ParallelDirectionalLight l1 = new ParallelDirectionalLight(new Vector(0,0,-1));
-		l1.setIntensity(new Vector(204,204,204));
-		m_scene.addLight(l1);
+//		Vector v3 = new Vector(-10, 50, -360);
+//		Box box = new Box(v0,v2,v1,v3);
+//		Surface s2 = new Surface();
+//		s2.setMtlDiffuse(new Vector(0.5,0.6,0.7));
+//		box.setSurface(s2);
+//		m_scene.addGeomObject(box);
+//		
+//		ParallelDirectionalLight l1 = new ParallelDirectionalLight(new Vector(0,0,-1));
+//		l1.setIntensity(new Vector(204,204,204));
+//		m_scene.addLight(l1);
 		
 		GC gc = new GC(canvas);
 		gc.fillRectangle(m_rect);

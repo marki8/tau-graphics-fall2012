@@ -43,5 +43,19 @@ public class Circle extends GeometricPrimitive {
 	public double getRadius() {
 		return radius;
 	}
+	
+	public void setCenter(Vector center) {
+		this.center = center;
+	}
+
+
+	public void setNormal(Vector normal) {
+		this.normal = normal;
+	}
+
+
+	public void setRadius(double radius) {
+		this.radius = radius;
+	}
 
 }

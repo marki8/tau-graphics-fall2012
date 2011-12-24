@@ -17,6 +17,10 @@ public class ParallelDirectionalLight extends Light {
 		this.direction = direction;
 	}
 	
+	public ParallelDirectionalLight() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Vector getDirection() {
 		return direction;
 	}

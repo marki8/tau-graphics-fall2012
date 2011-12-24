@@ -13,7 +13,7 @@ public class Surface {
 		CHECKERS,
 		TEXTURE
 	}
-	mtlType surfaceType = mtlType.FLAT;
+	private mtlType surfaceType = mtlType.FLAT;
 	
 	private Vector mtlDiffuse  = new Vector(0.8,0.8,0.8); //Kd
 	private Vector mtlSpecular = new Vector(1,1,1); //Ks
@@ -117,5 +117,15 @@ public class Surface {
 	
 	public void setReflectance(double reflectance) {
 		this.reflectance = reflectance;
+	}
+
+	public mtlType getSurfaceType() {
+		return surfaceType;
+	}
+
+	public void setSurfaceType(String type) {
+		if(type.equals("flat")) surfaceType = mtlType.FLAT;
+		if(type.equals("checkers")) surfaceType = mtlType.CHECKERS;
+		if(type.equals("texture")) surfaceType = mtlType.TEXTURE;
 	}
 }

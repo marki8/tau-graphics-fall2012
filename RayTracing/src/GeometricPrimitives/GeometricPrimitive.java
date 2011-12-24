@@ -7,7 +7,7 @@ import raytracer.Vector;
 
 public abstract class GeometricPrimitive {
 	
-	private Surface surface;
+	private Surface surface = new Surface();
 
 	public Surface getSurface() {
 		return surface;

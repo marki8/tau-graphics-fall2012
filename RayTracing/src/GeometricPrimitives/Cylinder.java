@@ -23,6 +23,12 @@ public class Cylinder extends GeometricPrimitive {
 
 
 
+	public Cylinder() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	@Override
 	public IntersectioPoint getIntersection(Ray r) {
 //		if ( Math.abs( r.getDirection().dotProduct(direction) ) == 1.0 ) { // parallel
