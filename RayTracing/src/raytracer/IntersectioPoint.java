@@ -13,7 +13,7 @@ public class IntersectioPoint {
 		super();
 		this.geom = geom;
 		this.location = location;
-		this.normal = normal;
+		this.normal = normal.normalize();
 	}
 	
 	public GeometricPrimitive getGeom() {
