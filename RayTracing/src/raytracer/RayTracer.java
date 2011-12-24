@@ -38,14 +38,15 @@ public class RayTracer {
 	void renderTo(ImageData dat, Canvas canvas) throws Parser.ParseException, IOException
 	{
 		// TO-ADD: initialize your scene object
-		Scene m_scene = new Scene();
-		m_scene.setCanvasSize(dat.height, dat.width);
+		//Scene m_scene = new Scene();
+		//m_scene.setCanvasSize(dat.height, dat.width);
 		// probably need to set its size before parsing.
 
 //		try {
 			// TO-ADD: instantiate your Parser inherited class and invoke it.
-			SceneParser f = new SceneParser(m_scene);
-			f.parse(new BufferedReader(new StringReader(m_sceneText.getText())));
+			//SceneParser f = new SceneParser(m_scene);
+			SceneParser f = new SceneParser();
+			Scene m_scene = f.parse(new BufferedReader(new StringReader(m_sceneText.getText())), dat.height, dat.width );
 //			throw new IOException();
 //		} catch (IOException e) {
 //			e.printStackTrace();
@@ -91,9 +92,9 @@ public class RayTracer {
 		box.setSurface(s2);
 		m_scene.addGeomObject(box);
 		
-		ParallelDirectionalLight l1 = new ParallelDirectionalLight(new Vector(0,0,-1));
+		/*ParallelDirectionalLight l1 = new ParallelDirectionalLight(new Vector(0,0,-1));
 		l1.setIntensity(new Vector(204,204,204));
-		m_scene.addLight(l1);
+		m_scene.addLight(l1);*/
 		
 		GC gc = new GC(canvas);
 		gc.fillRectangle(m_rect);
