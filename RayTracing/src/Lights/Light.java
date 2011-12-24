@@ -15,7 +15,7 @@ public abstract class Light {
 	}
 
 	public void setIntensity(Vector intensity) {
-		this.intensity = intensity;
+		this.intensity = intensity.scalarMult(255.0);
 	}
 
 	public abstract Vector findLightImpact(Scene scene, Ray ray, Intersection hit);
