@@ -1,0 +1,10 @@
+scene:
+
+sphere:
+center = 0 0 -300
+radius = 60
+mtl-diffuse=0.98 0.48 0.4
+
+light-directed:
+direction=0 0 -1
+color= 0.8 0.8 0.8
