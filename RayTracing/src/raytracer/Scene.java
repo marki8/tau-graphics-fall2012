@@ -24,7 +24,7 @@ public class Scene {
 	private double tanWTheta;
 	private double paneDist;
 	private String backgroundTex;
-	private Vector ambientLight;
+	private Vector ambientLight = new Vector(0,0,0);
 	private int superSampling;
 	private int useAcceleration;
 	private double screenDistance = 1;
@@ -41,14 +41,16 @@ public class Scene {
 	}
 
 	private void calcPaneCoord() {
-		paneDist = getScreenDistance()*width;
+		paneDist = getScreenDistance();//*width;
+		double paneWidth = cam.getScreenWidth();
+		double paneHeight = cam.getScreenWidth()*(height/width);
 		
 		// vpCenter is the point straight ahead of the camera on the view plane
 		Ray ray = new Ray(cam.getEye(), cam.getDirection());
 		vpCenter = ray.retrievePoint(paneDist);
 		
 		// Vertical axis
-		tanHTheta = height / (paneDist * 2.0);
+		tanHTheta = paneHeight / (paneDist * 2.0);
 		Vector top_middle = cam.getEye()
 				.add(cam.getDirection().scalarMult(paneDist))
 				.add(cam.getUpDirection().scalarMult(paneDist*tanHTheta));
@@ -57,7 +59,7 @@ public class Scene {
 				.substract(cam.getUpDirection().scalarMult(paneDist*tanHTheta));
 		
 		// Horizontal axis
-		tanWTheta = width / (paneDist * 2.0);
+		tanWTheta = paneWidth / (paneDist * 2.0);
 		Vector left_middle = cam.getEye()
 				.add(cam.getDirection().scalarMult(paneDist))
 				.substract(cam.getRightDirection().scalarMult(paneDist*tanHTheta));
@@ -114,7 +116,7 @@ public class Scene {
 
 	private Ray constructRayThroughPixel(int x, int y) {
 		Vector scenePaneSamplePoint = toSceneCoord(x,y);
-		Ray ray = new Ray(cam.getEye(), scenePaneSamplePoint);
+		Ray ray = new Ray(cam.getEye(), scenePaneSamplePoint.substract(cam.getEye()));
 		return ray;
 	}
 
@@ -167,7 +169,7 @@ public class Scene {
 	}
 
 	public void setAmbientLight(Vector ambientLight) {
-		this.ambientLight = ambientLight;
+		this.ambientLight = ambientLight.scalarMult(255.0);
 	}
 
 	public int getSuperSampling() {

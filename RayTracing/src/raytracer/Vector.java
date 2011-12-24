@@ -95,11 +95,13 @@ public class Vector {
 	}
 	
 	public static Vector vectorReflection(Vector v, Vector normal) {
-		double dp = v.dotProduct(normal);
-		if(dp<0) 
-			dp=0;
-		
-		return (v.substract(normal.scalarMult(2).scalarMult(dp)));
-						
+//		double dp = v.dotProduct(normal);
+//		if(dp<0) 
+//			dp=0;
+//		
+//		return (v.substract(normal.scalarMult(2).scalarMult(dp)));
+		double nSize = normal.dotProduct(v);
+		Vector ntag = normal.scalarMult(nSize);
+		return v.add(ntag.substract(v).scalarMult(2.0));
 	}
 }
