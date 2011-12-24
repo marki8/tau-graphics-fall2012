@@ -24,6 +24,10 @@ public class Scene {
 	private double tanWTheta;
 	private double paneDist;
 	
+	public Scene(int sceneHeight, int sceneWidth) {
+		setCanvasSize(sceneHeight, sceneWidth);
+	}
+
 	public void setCanvasSize(int height, int width) {
 		this.height = height;
 		this.width = width;
