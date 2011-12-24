@@ -20,6 +20,11 @@ public class Circle extends GeometricPrimitive {
 	}
 
 
+	public Circle() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	@Override
 	public IntersectioPoint getIntersection(Ray r) {
 		Vector intPoint = Auxiliary.findIntersectionOfVectorAndHalfPlane(r, getNormal(), getCenter());
