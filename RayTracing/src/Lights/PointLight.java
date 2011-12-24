@@ -7,13 +7,17 @@ import raytracer.Vector;
 
 public class PointLight extends Light {
 	
-	private Vector position;
+	private Vector position = new Vector(0,0,0);
 	private Vector attenuation = new Vector(1,0,0);
 	
 	public PointLight(Vector position){
 		this.position = position;
 	}
 	
+	public PointLight() {
+		
+	}
+
 	public Vector getPosition() {
 		return position;
 	}
