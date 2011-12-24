@@ -33,7 +33,7 @@ public class ParallelDirectionalLight extends Light {
 	@Override
 	public Vector findLightImpact(Scene scene, Ray ray, Intersection hit) {
 
-		Vector towardsLight = ray.getDirection().scalarMult(-1);
+		Vector towardsLight = direction.scalarMult(-1);
 		Ray rayFromObjToLight = new Ray(hit.getMinIntPoint().getLocation(), towardsLight);
 		Intersection objToLightInt = Scene.findInteresction(scene, rayFromObjToLight, hit.getMinIntPoint().getGeom());
 		

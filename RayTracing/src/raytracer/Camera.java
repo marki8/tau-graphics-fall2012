@@ -48,6 +48,7 @@ public class Camera {
 
 	public void setEye(Vector eye) {
 		this.eye = eye;
+		calcParams();
 	}
 
 	public Vector getDirection() {
@@ -56,6 +57,7 @@ public class Camera {
 
 	public void setDirection(Vector direction) {
 		this.direction = direction.normalize();
+		calcParams();
 	}
 
 	public Vector getLookAt() {
@@ -74,13 +76,14 @@ public class Camera {
 
 	public void setUpDirection(Vector upDirection) {
 		this.upDirection = upDirection.normalize();
+		calcParams();
 	}
 
 	public Vector getRightDirection() {
 		return rightDirection;
 	}
 
-	public void setRightDirection(Vector rightDirection) {
+	private void setRightDirection(Vector rightDirection) {
 		this.rightDirection = rightDirection.normalize();
 	}
 
@@ -90,13 +93,14 @@ public class Camera {
 
 	public void setScreenWidth(double screenWidth) {
 		this.screenWidth = screenWidth;
+		calcParams();
 	}
 
 	public Vector getVpUp() {
 		return vpUp;
 	}
 
-	public void setVpUp(Vector vpUp) {
+	private void setVpUp(Vector vpUp) {
 		this.vpUp = vpUp.normalize();
 	}
 		

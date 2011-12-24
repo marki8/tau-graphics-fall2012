@@ -31,12 +31,13 @@ public abstract class Light {
 		Vector R = Vector.vectorReflection(L,N);
 		Vector V = ray.getDirection().scalarMult(-1).normalize();
 		double VR = V.dotProduct(R);
-		double NL = N.dotProduct(L);
+		double NL = N.dotProduct(L.normalize());
 		Vector Ka = hit.getMinIntPoint().getGeom().getSurface().getMtlAmbient();
 		
-		double colorX = intensity.getX()*((Ka.getX()) + (Kd.getDoubleX()*NL) + (Ks.getX()*Math.pow(VR, n)));
-		double colorY = intensity.getY()*((Ka.getY()) + (Kd.getDoubleY()*NL) + (Ks.getY()*Math.pow(VR, n)));
-		double colorZ = intensity.getZ()*((Ka.getZ()) + (Kd.getDoubleZ()*NL) + (Ks.getZ()*Math.pow(VR, n)));
+		// TODO: add emition component 
+		double colorX = (Ka.getDoubleX() * scene.getAmbientLight().getDoubleX()) + intensity.getX()*((Kd.getDoubleX()*NL) + (Ks.getDoubleX()*Math.pow(VR, n)));
+		double colorY = (Ka.getDoubleY() * scene.getAmbientLight().getDoubleY()) + intensity.getY()*((Kd.getDoubleY()*NL) + (Ks.getDoubleY()*Math.pow(VR, n)));
+		double colorZ = (Ka.getDoubleZ() * scene.getAmbientLight().getDoubleZ()) + intensity.getZ()*((Kd.getDoubleZ()*NL) + (Ks.getDoubleZ()*Math.pow(VR, n)));
 		
 		if(colorX > 255) colorX = 255;
 		if(colorY > 255) colorY = 255;

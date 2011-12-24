@@ -10,8 +10,11 @@ import raytracer.Vector;
 
 public class Box extends GeometricPrimitive {
 
-	private List<Rectangle> rectList;
-	private Vector p0, p1, p2, p3;
+	private List<Rectangle> rectList = new ArrayList<>(6);
+	private Vector p0 = new Vector(0,0,0);
+	private Vector p1 = new Vector(0,0,0); 
+	private Vector p2 = new Vector(0,0,0);
+	private Vector p3 = new Vector(0,0,0);
 	
 	/**
 	 * Construct the hexahedron defined by (p1-p0)x(p2-p0)x(p3-p0)
@@ -25,8 +28,14 @@ public class Box extends GeometricPrimitive {
 		this.setP1(p1);
 		this.setP2(p2);
 		this.setP3(p3);
-		rectList = new ArrayList<>(6);
-		
+		updateSides();
+	}
+
+	public Box() {
+		// TODO Auto-generated constructor stub
+	}
+
+	private void updateSides(){
 		// Immediate sides
 		rectList.add( new Rectangle(p0, p2, p1) );
 		rectList.add( new Rectangle(p0, p1, p3) );
@@ -43,10 +52,6 @@ public class Box extends GeometricPrimitive {
 		rectList.add( new Rectangle(p2, p3.add(p2p0), p1.add(p2p0)) );
 	}
 	
-	public Box() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public IntersectioPoint getIntersection(Ray r) {
 		Intersection hit = new Intersection(r.getOrigin());
@@ -72,6 +77,7 @@ public class Box extends GeometricPrimitive {
 
 	public void setP0(Vector p0) {
 		this.p0 = p0;
+		updateSides();
 	}
 
 	public Vector getP1() {
@@ -80,6 +86,7 @@ public class Box extends GeometricPrimitive {
 
 	public void setP1(Vector p1) {
 		this.p1 = p1;
+		updateSides();
 	}
 
 	public Vector getP2() {
@@ -88,6 +95,7 @@ public class Box extends GeometricPrimitive {
 
 	public void setP2(Vector p2) {
 		this.p2 = p2;
+		updateSides();
 	}
 
 	public Vector getP3() {
@@ -96,6 +104,7 @@ public class Box extends GeometricPrimitive {
 
 	public void setP3(Vector p3) {
 		this.p3 = p3;
+		updateSides();
 	}
 
 }
