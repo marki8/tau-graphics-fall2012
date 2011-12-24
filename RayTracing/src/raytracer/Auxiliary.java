@@ -31,7 +31,7 @@ public class Auxiliary {
 	public static Vector findNearestPointOnLine(Vector point, Vector origin, Vector direction) {
 		Vector PO = point.substract(origin);
 		double size = PO.dotProduct(direction);
-		return direction.scalarMult(size);
+		return origin.add(direction.scalarMult(size));
 	}
 
 	public static double[] quadricRoots(double a, double b, double c) {
