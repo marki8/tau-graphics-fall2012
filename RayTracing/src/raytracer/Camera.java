@@ -7,7 +7,6 @@ public class Camera {
 	private Vector upDirection = new Vector(0,1,0);
 	private Vector rightDirection;
 	private Vector vpUp;
-	private double screenDist = 1;
 	private double screenWidth = 2;
 	private double screenHeight;
 	
@@ -16,7 +15,6 @@ public class Camera {
 		this.setEye(eye);
 		this.setDirection(direction);
 		this.setUpDirection(upDirection);
-		this.setScreenDist(screenDist);
 		this.setScreenWidth(screenWidth);
 		calcParams();
 	}
@@ -66,6 +64,8 @@ public class Camera {
 
 	public void setLookAt(Vector lookAt) {
 		this.lookAt = lookAt;
+		this.setDirection(lookAt.substract(eye));
+		calcParams();
 	}
 
 	public Vector getUpDirection() {
@@ -82,14 +82,6 @@ public class Camera {
 
 	public void setRightDirection(Vector rightDirection) {
 		this.rightDirection = rightDirection.normalize();
-	}
-
-	public double getScreenDist() {
-		return screenDist;
-	}
-
-	public void setScreenDist(double screenDist) {
-		this.screenDist = screenDist;
 	}
 
 	public double getScreenWidth() {

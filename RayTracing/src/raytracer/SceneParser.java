@@ -38,6 +38,8 @@ public class SceneParser {
 		sceneHeight = height;
 		sceneWidth = width;
 		
+		
+		
 		while((line = br.readLine()) != null) {
 			if(line.length() == 0){
 				continue;
@@ -109,7 +111,7 @@ public class SceneParser {
 			else if(param.equals("direction")) scene.getCam().setDirection(valVec);
 			else if(param.equals("look-at")) scene.getCam().setLookAt(valVec);
 			else if(param.equals("up-direction")) scene.getCam().setUpDirection(valVec);
-			else if(param.equals("screen-dist")) scene.getCam().setScreenDist(val);
+			else if(param.equals("screen-dist")) scene.setScreenDistance(val);
 			else if(param.equals("screen-width")) scene.getCam().setScreenWidth(val);
 			else unknownParam = true;
 		}

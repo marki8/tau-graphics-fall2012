@@ -27,9 +27,11 @@ public class Scene {
 	private Vector ambientLight;
 	private int superSampling;
 	private int useAcceleration;
+	private double screenDistance = 1;
 	
 	public Scene(int sceneHeight, int sceneWidth) {
 		setCanvasSize(sceneHeight, sceneWidth);
+		calcPaneCoord();
 	}
 
 	public void setCanvasSize(int height, int width) {
@@ -39,7 +41,7 @@ public class Scene {
 	}
 
 	private void calcPaneCoord() {
-		paneDist = cam.getScreenDist()*width;
+		paneDist = getScreenDistance()*width;
 		
 		// vpCenter is the point straight ahead of the camera on the view plane
 		Ray ray = new Ray(cam.getEye(), cam.getDirection());
@@ -142,7 +144,6 @@ public class Scene {
 
 	public void setCam(Camera cam) {
 		this.cam = cam;
-		calcPaneCoord();
 	}
 
 	public Vector getBackgroundColor() {
@@ -183,5 +184,15 @@ public class Scene {
 
 	public void setUseAcceleration(int val) {
 		this.useAcceleration = val;
+	}
+
+	public double getScreenDistance() {
+		
+		return screenDistance;
+	}
+
+	public void setScreenDistance(double screenDistance) {
+		this.screenDistance = screenDistance;
+		calcPaneCoord();
 	}
 }
