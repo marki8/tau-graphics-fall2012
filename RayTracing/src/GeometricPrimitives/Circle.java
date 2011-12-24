@@ -7,9 +7,9 @@ import raytracer.Vector;
 
 public class Circle extends GeometricPrimitive {
 
-	Vector center;
-	Vector normal;
-	double radius;
+	Vector center = new Vector(0,0,0);
+	Vector normal = new Vector(0,0,1);
+	double radius = 1;
 	
 	
 	public Circle(Vector center, Vector normal, double radius) {
