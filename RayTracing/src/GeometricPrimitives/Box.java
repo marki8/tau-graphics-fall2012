@@ -38,9 +38,9 @@ public class Box extends GeometricPrimitive {
 		Vector p3p0 = p3.substract(p0);
 		
 		// calculated sides
-		rectList.add( new Rectangle(p3, p3.add(p2p0), p2.add(p1p0)) );
-		rectList.add( new Rectangle(p1, p2.add(p1p0), p3.add(p1p0)) );
-		rectList.add( new Rectangle(p3, p3.add(p1p0), p3.add(p2p0)) );
+		rectList.add( new Rectangle(p3, p3.add(p2p0), p1.add(p3p0)) );
+		rectList.add( new Rectangle(p1, p1.add(p3p0), p1.add(p2p0)) );
+		rectList.add( new Rectangle(p2, p3.add(p2p0), p1.add(p2p0)) );
 	}
 	
 	@Override
