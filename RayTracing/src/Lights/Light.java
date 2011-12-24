@@ -8,7 +8,7 @@ import raytracer.Vector;
 
 public abstract class Light {
 	
-	private Vector intensity = new Vector(1,1,1);
+	private Vector intensity = new Vector(255,255,255);
 
 	public Vector getIntensity() {
 		return intensity;
@@ -33,9 +33,15 @@ public abstract class Light {
 		double VR = V.dotProduct(R);
 		double NL = N.dotProduct(L);
 		
-		color.setX(intensity.getX()*(Kd.getDoubleX()*NL) + Ks.getX()*Math.pow(VR, n));
-		color.setY(intensity.getY()*(Kd.getDoubleY()*NL) + Ks.getY()*Math.pow(VR, n));
-		color.setZ(intensity.getZ()*(Kd.getDoubleZ()*NL) + Ks.getZ()*Math.pow(VR, n));
+		double colorX = intensity.getX()*((Kd.getDoubleX()*NL) + Ks.getX()*Math.pow(VR, n));
+		double colorY = intensity.getY()*((Kd.getDoubleY()*NL) + Ks.getY()*Math.pow(VR, n));
+		double colorZ = intensity.getZ()*((Kd.getDoubleZ()*NL) + Ks.getZ()*Math.pow(VR, n)); 
+		if(colorX > 255) colorX = 255;
+		if(colorY > 255) colorY = 255;
+		if(colorZ > 255) colorZ = 255;
+		color.setX(colorX);
+		color.setY(colorY);
+		color.setZ(colorZ);
 		
 		return color;
 	}
