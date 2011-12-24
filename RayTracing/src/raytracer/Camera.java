@@ -1,10 +1,10 @@
 package raytracer;
 
 public class Camera {
-	private Vector eye;
-	private Vector direction; 
+	private Vector eye = new Vector(0,0,0);
+	private Vector direction = new Vector (0,0,-1); 
 	private Vector lookAt;//Either give up direction or lookAt;
-	private Vector upDirection;
+	private Vector upDirection = new Vector(0,1,0);
 	private Vector rightDirection;
 	private Vector vpUp;
 	private double screenDist = 1;
@@ -23,6 +23,12 @@ public class Camera {
 
 
 	
+	public Camera() {
+		calcParams();
+	}
+
+
+
 	private void calcParams() {
 		
 		// right = towards x up
