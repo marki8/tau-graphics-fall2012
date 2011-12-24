@@ -94,13 +94,13 @@ public class SceneParser {
 	private void addObject(String obj) {
 		if(obj.equals("scene")) scene = new Scene(sceneHeight, sceneWidth);
 		else if(obj.equals("camera")) scene.setCam(new Camera());
-		else if(obj.equals("light-directed")) scene.addLight(new ParallelDirectionalLight());
-		else if(obj.equals("light-point:")) scene.addLight(new PointLight());
-		//if(obj.equals("light-area")) return new ;
-		else if(obj.equals("rectangle")) scene.addGeomObject(new Rectangle());
-		//if(obj.equals("disc")) return new ;
-		else if(obj.equals("sphere")) scene.addGeomObject(new Sphere());
-		else if(obj.equals("box")) scene.addGeomObject(new Box());
+//		else if(obj.equals("light-directed")) scene.addLight(new ParallelDirectionalLight());
+//		else if(obj.equals("light-point:")) scene.addLight(new PointLight());
+//		//if(obj.equals("light-area")) return new ;
+//		else if(obj.equals("rectangle")) scene.addGeomObject(new Rectangle());
+//		//if(obj.equals("disc")) return new ;
+//		else if(obj.equals("sphere")) scene.addGeomObject(new Sphere());
+//		else if(obj.equals("box")) scene.addGeomObject(new Box());
 		else if(obj.equals("cylinder")) scene.addGeomObject(new Cylinder());
 		
 		
