@@ -4,8 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 
+import GeometricPrimitives.Box;
+import GeometricPrimitives.Cylinder;
 import GeometricPrimitives.GeometricPrimitive;
 import GeometricPrimitives.Rectangle;
+import GeometricPrimitives.Sphere;
 import Lights.Light;
 import Lights.ParallelDirectionalLight;
 import Lights.PointLight;
@@ -19,15 +22,20 @@ public class SceneParser {
 	Scene scene;
 	List<GeometricPrimitive> geoList = new LinkedList<>();
 	List<Light> lightList = new LinkedList<>();
+	int sceneHeight, sceneWidth;
 	
-	public SceneParser(Scene m_scene) {
-		this.scene = m_scene;
+	
+	public SceneParser() {
+		//this.scene = m_scene;
 	}
 
-	public void parse(BufferedReader br) throws IOException {
+	public Scene parse(BufferedReader br, int height, int width) throws IOException {
 
 		String line, obj = null, param, valueStr;
 		double value;
+		
+		sceneHeight = height;
+		sceneWidth = width;
 		
 		// TODO: deal with cases of illegal input
 		
@@ -37,8 +45,8 @@ public class SceneParser {
 			}
 			else if (line.charAt(line.length() - 1) == ':') {
 				obj = line.substring(0, line.length() - 1);
+				//geoList.add((GeometricPrimitive) addObject(obj));
 				addObject(obj);
-				
 				System.out.println("object: " + obj); //????
 			}
 			else {
@@ -56,7 +64,7 @@ public class SceneParser {
 				}
 				firstCharLocationAfterEq = tmpEqualsLoc;
 				param = line.substring(0, firstCharLocationBeforEq+1);
-				//valueStr = line.substring(firstCharLocationAfterEq, line.length());
+
 				String[] args = line.substring(firstCharLocationAfterEq).trim().toLowerCase().split("\\s+");
 				
 				if(obj == null){
@@ -64,6 +72,8 @@ public class SceneParser {
 				}
 				
 				addParams(obj, args);
+					
+				
 				
 				System.out.print("param : " + param + " value: "); //????
 				for(int i=0; i<args.length; i++){
@@ -73,27 +83,7 @@ public class SceneParser {
 			}
 			
 		}
-
-	
-		/*Vector v0 = new Vector(-30, 30, -300);
-		Vector v1 = new Vector(30, 30, -300);
-		Vector v2 = new Vector(-30, -30, -300);
-		Rectangle rec = new Rectangle(v0,v1,v2);
-		Surface s1 = new Surface();
-		s1.setMtlDiffuse(new Vector(0.98,0.48,0.4));
-		s1.setMtlSpecular(new Vector(0.7,0.7,0.7));
-		s1.setMtlShininess(20);
-		rec.setSurface(s1);
-		scene.addGeomObject(rec);
-		
-		v0 = new Vector(0, 30, -400);
-		v1 = new Vector(150, 30, -400);
-		v2 = new Vector(-100, -30, -400);
-		Rectangle rec2 = new Rectangle(v0,v1,v2);
-		Surface s2 = new Surface();
-		s2.setMtlDiffuse(new Vector(0.5,0.6,0.7));
-		rec2.setSurface(s2);
-		scene.addGeomObject(rec2);*/	
+		return scene;
 	}
 
 	private void addParams(String obj, String[] args) {
@@ -101,18 +91,20 @@ public class SceneParser {
 		
 	}
 
-	private Object addObject(String obj) {
-		if(obj.equals("scene")) return new Scene();
-//		if(obj.equals("camera")) return new Camera();
-//		if(obj.equals("light-directed")) return new ParallelDirectionalLight();
-//		if(obj.equals("light-point:")) return new PointLight();
-//		//if(obj.equals("light-area")) return new ;
-//		if(obj.equals("rectangle")) return new Rectangle();
-//		//if(obj.equals("disc")) return new ;
-//		if(obj.equals("sphere")) return new Sphere();
-//		if(obj.equals("box")) return new Box();
-//		if(obj.equals("cylinder")) return new Cylinder();
-		return null;
+	private void addObject(String obj) {
+		if(obj.equals("scene")) scene = new Scene(sceneHeight, sceneWidth);
+		else if(obj.equals("camera")) scene.setCam(new Camera());
+		else if(obj.equals("light-directed")) scene.addLight(new ParallelDirectionalLight());
+		else if(obj.equals("light-point:")) scene.addLight(new PointLight());
+		//if(obj.equals("light-area")) return new ;
+		else if(obj.equals("rectangle")) scene.addGeomObject(new Rectangle());
+		//if(obj.equals("disc")) return new ;
+		else if(obj.equals("sphere")) scene.addGeomObject(new Sphere());
+		else if(obj.equals("box")) scene.addGeomObject(new Box());
+		else if(obj.equals("cylinder")) scene.addGeomObject(new Cylinder());
+		
+		
+		// ?????? IF NOT RECOGNIZED THROW ERROR?
 	}
 
 
