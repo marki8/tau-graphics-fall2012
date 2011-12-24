@@ -6,14 +6,19 @@ import raytracer.Vector;
 
 public class Sphere extends GeometricPrimitive {
 
-	Vector center;
-	double radius;
+	private Vector center;
+	private double radius;
 	
 	
 	public Sphere(Vector center, double radius) {
 		super();
 		this.center = center;
 		this.radius = radius;
+	}
+
+
+	public Sphere() {
+		super();
 	}
 
 
@@ -56,6 +61,16 @@ public class Sphere extends GeometricPrimitive {
 
 	public double getRadius() {
 		return radius;
+	}
+
+
+	public void setCenter(Vector center) {
+		this.center = center;
+	}
+
+
+	public void setRadius(double radius) {
+		this.radius = radius;
 	}
 
 }

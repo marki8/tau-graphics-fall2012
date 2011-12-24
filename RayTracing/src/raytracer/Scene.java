@@ -10,7 +10,7 @@ import raytracer.Auxiliary;
 
 public class Scene {
 
-	private static final Vector BackgroundColor = new Vector(200,2000,200);
+	private Vector backgroundColor = new Vector(0,0,0);
 	private int height;
 	private int width;
 	List<GeometricPrimitive> geoList = new LinkedList<>();
@@ -23,6 +23,10 @@ public class Scene {
 	private double tanHTheta;
 	private double tanWTheta;
 	private double paneDist;
+	private String backgroundTex;
+	private Vector ambientLight;
+	private int superSampling;
+	private int useAcceleration;
 	
 	public Scene(int sceneHeight, int sceneWidth) {
 		setCanvasSize(sceneHeight, sceneWidth);
@@ -72,7 +76,7 @@ public class Scene {
 		
 		Intersection hit = findInteresction(scene, ray);
 		if ( hit.noIntersection() )
-			return BackgroundColor;
+			return getBackgroundColor();
 		
 		for(Light l: lightList){
 			Vector impact = l.findLightImpact(scene, ray, hit);
@@ -142,5 +146,45 @@ public class Scene {
 	public void setCam(Camera cam) {
 		this.cam = cam;
 		calcPaneCoord();
+	}
+
+	public Vector getBackgroundColor() {
+		return backgroundColor;
+	}
+
+	public void setBackgroundColor(Vector backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
+
+	public String getBackgroundTex() {
+		return backgroundTex;
+	}
+
+	public void setBackgroundTex(String backgroundTex) {
+		this.backgroundTex = backgroundTex;
+	}
+
+	public Vector getAmbientLight() {
+		return ambientLight;
+	}
+
+	public void setAmbientLight(Vector ambientLight) {
+		this.ambientLight = ambientLight;
+	}
+
+	public int getSuperSampling() {
+		return superSampling;
+	}
+
+	public void setSuperSampling(int superSampling) {
+		this.superSampling = superSampling;
+	}
+
+	public int isUseAcceleration() {
+		return useAcceleration;
+	}
+
+	public void setUseAcceleration(int val) {
+		this.useAcceleration = val;
 	}
 }

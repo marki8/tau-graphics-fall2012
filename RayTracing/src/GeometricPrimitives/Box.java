@@ -43,6 +43,10 @@ public class Box extends GeometricPrimitive {
 		rectList.add( new Rectangle(p2, p3.add(p2p0), p1.add(p2p0)) );
 	}
 	
+	public Box() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public IntersectioPoint getIntersection(Ray r) {
 		Intersection hit = new Intersection(r.getOrigin());
