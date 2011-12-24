@@ -153,7 +153,7 @@ public class Scene {
 	}
 
 	public void setBackgroundColor(Vector backgroundColor) {
-		this.backgroundColor = backgroundColor;
+		this.backgroundColor = backgroundColor.scalarMult(255.0);
 	}
 
 	public String getBackgroundTex() {
