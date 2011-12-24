@@ -83,9 +83,6 @@ public class Scene {
 			color = color.add(impact);
 		}
 		
-		
-		
-		// TODO: find the color at the minimal intersection point.
 		return color;
 	}
 
