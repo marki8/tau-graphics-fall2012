@@ -32,10 +32,12 @@ public abstract class Light {
 		Vector V = ray.getDirection().scalarMult(-1).normalize();
 		double VR = V.dotProduct(R);
 		double NL = N.dotProduct(L);
+		Vector Ka = hit.getMinIntPoint().getGeom().getSurface().getMtlAmbient();
 		
-		double colorX = intensity.getX()*((Kd.getDoubleX()*NL) + Ks.getX()*Math.pow(VR, n));
-		double colorY = intensity.getY()*((Kd.getDoubleY()*NL) + Ks.getY()*Math.pow(VR, n));
-		double colorZ = intensity.getZ()*((Kd.getDoubleZ()*NL) + Ks.getZ()*Math.pow(VR, n)); 
+		double colorX = intensity.getX()*((Ka.getX()) + (Kd.getDoubleX()*NL) + (Ks.getX()*Math.pow(VR, n)));
+		double colorY = intensity.getY()*((Ka.getY()) + (Kd.getDoubleY()*NL) + (Ks.getY()*Math.pow(VR, n)));
+		double colorZ = intensity.getZ()*((Ka.getZ()) + (Kd.getDoubleZ()*NL) + (Ks.getZ()*Math.pow(VR, n)));
+		
 		if(colorX > 255) colorX = 255;
 		if(colorY > 255) colorY = 255;
 		if(colorZ > 255) colorZ = 255;
