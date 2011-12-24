@@ -126,7 +126,7 @@ public class SceneParser {
 			else if(param.equals("attenuation")) ((PointLight)scene.lightList.get(scene.lightList.size()-1)).setAttenuation(valVec);
 			else unknownParam = true;
 		}
-		if(obj.equals("disc") || obj.equals ("sphere") || obj.equals ("box") || obj.equals ("cylinder") || obj.equals ("rectangle")){
+		if(obj.equals("disc") || obj.equals ("sphere") || obj.equals ("box") || obj.equals ("cylinder") || obj.equals ("rectangle") || obj.equals ("circle")){
 			if(param.equals("mtl-type")) scene.geoList.get(scene.geoList.size()-1).getSurface().setSurfaceType(args[0]);
 			else if(param.equals("mtl-diffuse")) scene.geoList.get(scene.geoList.size()-1).getSurface().setMtlDiffuse(valVec);
 			else if(param.equals("mtl-specular")) scene.geoList.get(scene.geoList.size()-1).getSurface().setMtlSpecular(valVec);
@@ -146,7 +146,7 @@ public class SceneParser {
 			else if(param.equals("p2")) ((Rectangle)scene.geoList.get(scene.geoList.size()-1)).setP2(valVec);
 			else notShape = true;
 		}
-		if(obj.equals("disc")){
+		if(obj.equals("disc") || obj.equals("circle")){
 			if(param.equals("center")) ((Circle)scene.geoList.get(scene.geoList.size()-1)).setCenter(valVec);
 			else if(param.equals("normal")) ((Circle)scene.geoList.get(scene.geoList.size()-1)).setNormal(valVec);
 			else if(param.equals("radius")) ((Circle)scene.geoList.get(scene.geoList.size()-1)).setRadius(val);
@@ -184,7 +184,8 @@ public class SceneParser {
 		else if(obj.equals("light-point")) scene.addLight(new PointLight());
 		//if(obj.equals("light-area")) return new ;
 		else if(obj.equals("rectangle")) scene.addGeomObject(new Rectangle());
-		else if(obj.equals("Circle")) scene.addGeomObject(new Circle());
+		else if(obj.equals("circle")) scene.addGeomObject(new Circle());
+		else if(obj.equals("disc")) scene.addGeomObject(new Circle());
 		else if(obj.equals("sphere")) scene.addGeomObject(new Sphere());
 		else if(obj.equals("box")) scene.addGeomObject(new Box());
 		else if(obj.equals("cylinder")) scene.addGeomObject(new Cylinder());
