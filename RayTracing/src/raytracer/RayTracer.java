@@ -28,9 +28,6 @@ public class RayTracer {
 		RayTracer tracer = new RayTracer();
 		tracer.runMain(display);
 		display.dispose();
-		
-		
-		
 	}
 	
 
@@ -52,48 +49,7 @@ public class RayTracer {
 //		}
 		
 		// TO-ADD: possibly add post-parse scene initializations
-		
-		
-//		Vector v0 = new Vector(-30, 30, -300);
-//		Vector v1 = new Vector(30, 30, -300);
-//		Vector v2 = new Vector(-30, -30, -300);
-//		Rectangle rec = new Rectangle(v0,v2,v1);
-//		Surface s1 = new Surface();
-//		s1.setMtlDiffuse(new Vector(0.98,0.48,0.4));
-//		s1.setMtlSpecular(new Vector(0.7,0.7,0.7));
-//		s1.setMtlShininess(20);
-//		rec.setSurface(s1);
-//		m_scene.addGeomObject(rec);
-		
-//		v0 = new Vector(0, 0, -300);
-//		v1 = new Vector(0,0,1);
-//		Circle circ = new Circle(v0, v1, 50);
-//		Surface s1 = new Surface();
-//		s1.setMtlDiffuse(new Vector(0.98,0.48,0.4));
-//		s1.setMtlSpecular(new Vector(0.7,0.7,0.7));
-//		s1.setMtlShininess(20);
-//		circ.setSurface(s1);
-//		m_scene.addGeomObject(circ);
 
-//		v0 = new Vector(0, 30, -400);
-//		v1 = new Vector(150, 30, -400);
-//		v2 = new Vector(-100, -30, -400);
-//		Rectangle rec2 = new Rectangle(v0,v1,v2);
-//		Surface s2 = new Surface();
-//		s2.setMtlDiffuse(new Vector(0.5,0.6,0.7));
-//		rec2.setSurface(s2);
-//		m_scene.addGeomObject(rec2);
-		
-//		Vector v3 = new Vector(-10, 50, -360);
-//		Box box = new Box(v0,v2,v1,v3);
-//		Surface s2 = new Surface();
-//		s2.setMtlDiffuse(new Vector(0.5,0.6,0.7));
-//		box.setSurface(s2);
-//		m_scene.addGeomObject(box);
-//		
-//		ParallelDirectionalLight l1 = new ParallelDirectionalLight(new Vector(0,0,-1));
-//		l1.setIntensity(new Vector(204,204,204));
-//		m_scene.addLight(l1);
 		
 		GC gc = new GC(canvas);
 		gc.fillRectangle(m_rect);
