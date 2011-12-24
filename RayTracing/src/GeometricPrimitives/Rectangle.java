@@ -19,7 +19,7 @@ public class Rectangle extends GeometricPrimitive{
 		this.setP0(p0);
 		this.setP1(p1);
 		this.setP2(p2);
-		p3 = (p2.substract(p0)).substract(p1);
+		p3 = p1.add(p2.substract(p0));
 		setNormal((p0.substract(p1)).crossProduct(p0.substract(p2))); // (p0-p1)X(p0-p2) normalized
 	}
 	
