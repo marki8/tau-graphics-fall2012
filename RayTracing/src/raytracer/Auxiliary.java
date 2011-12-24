@@ -27,4 +27,28 @@ public class Auxiliary {
 			return (ray.retrievePoint(numerator / denominator));
 		}
 	}
+
+	public static Vector findNearestPointOnLine(Vector point, Vector origin, Vector direction) {
+		Vector PO = point.substract(origin);
+		double size = PO.dotProduct(direction);
+		return direction.scalarMult(size);
+	}
+
+	public static double[] quadricRoots(double a, double b, double c) {
+		// a = 0
+		if ( a == 0.0 ) return new double[] {(- c / b )};
+		
+		// discremenant
+		double det = b*b-4.0*a*c;
+		if ( det < 0 )
+			return null;
+		
+		if ( det == 0 )
+			return new double[]{ (-b / (2.0 * a) ) };
+		
+		return new double[]{
+				(-b + Math.sqrt(det)) / (2.0 * a),
+				(-b - Math.sqrt(det)) / (2.0 * a)
+		};
+	}
 }
