@@ -25,7 +25,7 @@ public class Scene {
 	private double paneDist;
 	private String backgroundTex;
 	private Vector ambientLight = new Vector(0,0,0);
-	private int superSampling;
+	private int superSampling = 1;
 	private int useAcceleration;
 	private double screenDistance = 1;
 	private double screenTosceneFactor = 1;
@@ -78,30 +78,43 @@ public class Scene {
 
 	public Vector getColor(Scene scene, int x, int y) {
 		
-		Vector color = new Vector (0,0,0);
+		Vector pixelColor = new Vector(0,0,0);
+		int sups = getSuperSampling();
 		
-		Ray ray = constructRayThroughPixel(x, y);
-		
-		Intersection hit = findInteresction(scene, ray);
-		if ( hit.noIntersection() )
-			return getBackgroundColor();
-		
-		for(Light l: lightList){
-			Vector impact = l.findLightImpact(scene, ray, hit);
-			color = color.add(impact);
+		for ( int i = 0 ; i < sups ; i++ ){
+			for ( int j = 0 ; j < sups ; j++ ) {
+				Vector color = new Vector (0,0,0);
+				Ray ray = constructRayThroughPixel((double)x+((double)i/sups), (double)y+((double)j/sups));
+				
+				Intersection hit = findInteresction(scene, ray);
+				if ( hit.noIntersection() )
+				{
+					color = getBackgroundColor();
+					pixelColor = pixelColor.add(color);
+					continue;
+				}
+				
+				for(Light l: lightList){
+					Vector impact = l.findLightImpact(scene, ray, hit);
+					color = color.add(impact);
+				}
+				
+				Vector Ka = hit.getMinIntPoint().getGeom().getSurface().getMtlAmbient();
+				double ambientX = (Ka.getDoubleX() * getAmbientLight().getDoubleX());		
+				double ambientY = (Ka.getDoubleY() * getAmbientLight().getDoubleY());		
+				double ambientZ = (Ka.getDoubleZ() * getAmbientLight().getDoubleZ());		
+				color = color.add(new Vector(ambientX, ambientY, ambientZ));
+				if ( color.getDoubleX() > 255.0 ) color.setX(255);
+				if ( color.getDoubleY() > 255.0 ) color.setY(255);
+				if ( color.getDoubleZ() > 255.0 ) color.setZ(255);
+				// TODO: add emition component 
+				
+				pixelColor = pixelColor.add(color);
+			}
 		}
 		
-		Vector Ka = hit.getMinIntPoint().getGeom().getSurface().getMtlAmbient();
-		double ambientX = (Ka.getDoubleX() * getAmbientLight().getDoubleX());		
-		double ambientY = (Ka.getDoubleY() * getAmbientLight().getDoubleY());		
-		double ambientZ = (Ka.getDoubleZ() * getAmbientLight().getDoubleZ());		
-		color = color.add(new Vector(ambientX, ambientY, ambientZ));
-		if ( color.getDoubleX() > 255.0 ) color.setX(255);
-		if ( color.getDoubleY() > 255.0 ) color.setY(255);
-		if ( color.getDoubleZ() > 255.0 ) color.setZ(255);
-		// TODO: add emition component 
+		return pixelColor.scalarMult(1.0 / (sups*sups));
 		
-		return color;
 	}
 
 	public static Intersection findInteresction(Scene scene, Ray ray) {
@@ -116,11 +129,14 @@ public class Scene {
 		return findInteresction(scene, ray, null);
 	}
 
-	public static Intersection findInteresction(Scene scene, Ray ray, GeometricPrimitive origin) {
+	public static Intersection findInteresction(Scene scene, Ray r, GeometricPrimitive origin) {
+		Ray ray;
+		if ( origin != null )
+			ray = new Ray(r.retrievePoint(0.001), r.getDirection());
+		else
+			ray = r;
 		Intersection intersection = new Intersection(ray.getOrigin());
 		for ( GeometricPrimitive g : scene.geoList ) {
-			if ( (origin != null) && (g == origin) )
-				continue;
 			IntersectioPoint intPoint = g.getIntersection(ray);
 			if ( intPoint != null )
 				intersection.addPoint(intPoint);
@@ -128,15 +144,15 @@ public class Scene {
 		return intersection;
 	}
 
-	private Ray constructRayThroughPixel(int x, int y) {
-		Vector scenePaneSamplePoint = toSceneCoord(x,y);
+	private Ray constructRayThroughPixel(double d, double e) {
+		Vector scenePaneSamplePoint = toSceneCoord(d,e);
 		Ray ray = new Ray(cam.getEye(), scenePaneSamplePoint.substract(cam.getEye()));
 		return ray;
 	}
 
-	private Vector toSceneCoord(int x, int y) {
-		double scenex = (x - width / 2) * screenTosceneFactor ;
-		double sceney = (height / 2 - y) * screenTosceneFactor;
+	private Vector toSceneCoord(double d, double e) {
+		double scenex = (d - width / 2) * screenTosceneFactor ;
+		double sceney = (height / 2 - e) * screenTosceneFactor;
 		Vector onLeftBorder = vpTopLeft
 				.add(cam.getUpDirection()
 						.scalarMult(2*paneDist*tanHTheta*(sceney / paneHeight - 0.5)));
