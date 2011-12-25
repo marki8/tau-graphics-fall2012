@@ -56,6 +56,8 @@ public class Cylinder extends GeometricPrimitive {
 					if ( pointOnCylinder(int2) ) {
 						Vector onAxis = Auxiliary.findNearestPointOnLine(int2, start, direction);
 						Vector normal = int2.substract(onAxis);
+						if ( normal.dotProduct(r.getDirection()) > 0.0 )
+							normal = normal.scalarMult(-1.0);
 						return new IntersectioPoint(this, int2, normal);//getNormal(int2));
 					}
 				}
@@ -64,6 +66,8 @@ public class Cylinder extends GeometricPrimitive {
 		if ( pointOnCylinder(int1) ) {
 			Vector onAxis = Auxiliary.findNearestPointOnLine(int1, start, direction);
 			Vector normal = int1.substract(onAxis);
+			if ( normal.dotProduct(r.getDirection()) > 0.0 )
+				normal = normal.scalarMult(-1.0);
 			return new IntersectioPoint(this, int1, normal);//getNormal(int1));
 		}
 		return null;

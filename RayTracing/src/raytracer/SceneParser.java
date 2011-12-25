@@ -45,6 +45,9 @@ public class SceneParser {
 			if(line.length() == 0){
 				continue;
 			}
+			else if (line.charAt(0) == '#') {
+				continue;
+			}
 			else if (line.charAt(line.length() - 1) == ':') {
 				obj = line.substring(0, line.length() - 1);
 				addObject(obj);

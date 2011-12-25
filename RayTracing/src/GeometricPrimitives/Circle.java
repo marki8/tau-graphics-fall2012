@@ -29,8 +29,12 @@ public class Circle extends GeometricPrimitive {
 	public IntersectioPoint getIntersection(Ray r) {
 		Vector intPoint = Auxiliary.findIntersectionOfVectorAndHalfPlane(r, getNormal(), getCenter());
 		if ( intPoint == null ) return null;
-		if ( intPoint.distance(center) <= getRadius() )
-			return new IntersectioPoint(this, intPoint, getNormal());
+		if ( intPoint.distance(center) <= getRadius() ){
+			Vector normal = getNormal();
+			if ( normal.dotProduct(r.getDirection()) > 0.0 )
+				normal = normal.scalarMult(-1.0);
+			return new IntersectioPoint(this, intPoint, normal);
+		}
 		return null;
 	}
 
