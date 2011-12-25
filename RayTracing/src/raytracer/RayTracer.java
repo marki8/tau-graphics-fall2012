@@ -146,7 +146,7 @@ public class RayTracer {
 		
 		final Shell shell = new Shell(display);
 		shell.setText("Ray Tracer Ex");
-		shell.setSize(428, 500);
+		shell.setSize(600, 500);
 		GridLayout gridLayout = new GridLayout();
 		
 		shell.setLayout(gridLayout);

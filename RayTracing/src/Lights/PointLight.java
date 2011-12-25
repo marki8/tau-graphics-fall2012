@@ -36,8 +36,24 @@ public class PointLight extends Light {
 
 	@Override
 	public Vector findLightImpact(Scene scene, Ray ray, Intersection hit) {
-		// TODO Auto-generated method stub
-		return null;
+		Vector hitToLight = position.substract(hit.getMinIntPoint().getLocation());
+		Vector towardsLight = hitToLight.normalize();
+		Ray rayFromObjToLight = new Ray(hit.getMinIntPoint().getLocation(), towardsLight);
+		Intersection objToLightInt = Scene.findInteresction(scene, rayFromObjToLight, hit.getMinIntPoint().getGeom());
+		
+		if(objToLightInt.getMinIntPoint() == null) { // nothing intersects with the ray from the object to the light
+			Vector col = calcColor(scene, ray, hit, towardsLight);
+			double dist = hitToLight.length();
+			double factor = attenuation.getDoubleX() 
+					+ attenuation.getDoubleY() * dist
+					+ attenuation.getDoubleZ() * dist * dist;
+			if ( factor == 0 ) return new Vector(0,0,0);
+			return col.scalarMult(1.0 / factor);
+		}
+		
+		else{
+			return new Vector (0,0,0);
+		}
 	}
 	
 }

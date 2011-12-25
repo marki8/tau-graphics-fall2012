@@ -28,10 +28,13 @@ public class Scene {
 	private int superSampling;
 	private int useAcceleration;
 	private double screenDistance = 1;
+	private double screenTosceneFactor = 1;
+	private double paneWidth;
+	private double paneHeight;
 	
 	public Scene(int sceneHeight, int sceneWidth) {
 		setCanvasSize(sceneHeight, sceneWidth);
-		calcPaneCoord();
+		//calcPaneCoord();
 	}
 
 	public void setCanvasSize(int height, int width) {
@@ -40,10 +43,11 @@ public class Scene {
 		calcPaneCoord();
 	}
 
-	private void calcPaneCoord() {
-		paneDist = getScreenDistance();//*width;
-		double paneWidth = cam.getScreenWidth();
-		double paneHeight = cam.getScreenWidth()*(height/width);
+	public void calcPaneCoord() {
+		paneDist = getScreenDistance();
+		paneWidth = cam.getScreenWidth();
+		paneHeight = cam.getScreenWidth()*((double)height/width);
+		screenTosceneFactor = paneWidth / (double)width;
 		
 		// vpCenter is the point straight ahead of the camera on the view plane
 		Ray ray = new Ray(cam.getEye(), cam.getDirection());
@@ -62,10 +66,10 @@ public class Scene {
 		tanWTheta = paneWidth / (paneDist * 2.0);
 		Vector left_middle = cam.getEye()
 				.add(cam.getDirection().scalarMult(paneDist))
-				.substract(cam.getRightDirection().scalarMult(paneDist*tanHTheta));
+				.substract(cam.getRightDirection().scalarMult(paneDist*tanWTheta));
 		Vector right_middle = cam.getEye()
 				.add(cam.getDirection().scalarMult(paneDist))
-				.add(cam.getRightDirection().scalarMult(paneDist*tanHTheta));
+				.add(cam.getRightDirection().scalarMult(paneDist*tanWTheta));
 		
 		vpTopLeft = top_middle.add(left_middle.substract(vpCenter));
 		vpBottomLeft = bottom_middle.add(left_middle.substract(vpCenter));
@@ -86,6 +90,16 @@ public class Scene {
 			Vector impact = l.findLightImpact(scene, ray, hit);
 			color = color.add(impact);
 		}
+		
+		Vector Ka = hit.getMinIntPoint().getGeom().getSurface().getMtlAmbient();
+		double ambientX = (Ka.getDoubleX() * getAmbientLight().getDoubleX());		
+		double ambientY = (Ka.getDoubleY() * getAmbientLight().getDoubleY());		
+		double ambientZ = (Ka.getDoubleZ() * getAmbientLight().getDoubleZ());		
+		color = color.add(new Vector(ambientX, ambientY, ambientZ));
+		if ( color.getDoubleX() > 255.0 ) color.setX(255);
+		if ( color.getDoubleY() > 255.0 ) color.setY(255);
+		if ( color.getDoubleZ() > 255.0 ) color.setZ(255);
+		// TODO: add emition component 
 		
 		return color;
 	}
@@ -121,14 +135,14 @@ public class Scene {
 	}
 
 	private Vector toSceneCoord(int x, int y) {
-		x -= width / 2;
-		y = height / 2 - y;
+		double scenex = (x - width / 2) * screenTosceneFactor ;
+		double sceney = (height / 2 - y) * screenTosceneFactor;
 		Vector onLeftBorder = vpTopLeft
 				.add(cam.getUpDirection()
-						.scalarMult(2*paneDist*tanHTheta*((double)y / height - 0.5)));
+						.scalarMult(2*paneDist*tanHTheta*(sceney / paneHeight - 0.5)));
 		Vector onTopBorder = vpTopLeft
 				.add(cam.getRightDirection()
-						.scalarMult(2*paneDist*tanWTheta*((double)x / width + 0.5)));
+						.scalarMult(2*paneDist*tanWTheta*(scenex / paneWidth + 0.5)));
 		return onLeftBorder.add(onTopBorder.substract(vpTopLeft));
 	}
 
@@ -146,6 +160,7 @@ public class Scene {
 
 	public void setCam(Camera cam) {
 		this.cam = cam;
+		calcPaneCoord();
 	}
 
 	public Vector getBackgroundColor() {

@@ -18,11 +18,11 @@ public abstract class Light {
 		this.intensity = intensity.scalarMult(255.0);
 	}
 
+	
 	public abstract Vector findLightImpact(Scene scene, Ray ray, Intersection hit);
 	
 	public Vector calcColor(Scene scene, Ray ray, Intersection hit, Vector L) {
 		
-		Vector color = new Vector(0,0,0);
 		Surface surface = hit.getMinIntPoint().getGeom().getSurface();
 		Vector Kd = surface.getMtlDiffuse(); // ONLY TRUE IF FLAT!!!
 		Vector Ks = surface.getMtlSpecular();
@@ -32,25 +32,15 @@ public abstract class Light {
 		Vector V = ray.getDirection().scalarMult(-1).normalize();
 		double VR = V.dotProduct(R);
 		double NL = N.dotProduct(L.normalize());
-		Vector Ka = hit.getMinIntPoint().getGeom().getSurface().getMtlAmbient();
 		
 		if(NL<0) NL*=-1;
-		if(VR<0) VR*=0;
+		if(VR<0) VR=0;
 		
-		// TODO: add emition component 
 		// TODO: take in consideration the distance of the lighting 
-		double colorX = (Ka.getDoubleX() * scene.getAmbientLight().getDoubleX()) + intensity.getX()*((Kd.getDoubleX()*NL) + (Ks.getDoubleX()*Math.pow(VR, n)));
-		double colorY = (Ka.getDoubleY() * scene.getAmbientLight().getDoubleY()) + intensity.getY()*((Kd.getDoubleY()*NL) + (Ks.getDoubleY()*Math.pow(VR, n)));
-		double colorZ = (Ka.getDoubleZ() * scene.getAmbientLight().getDoubleZ()) + intensity.getZ()*((Kd.getDoubleZ()*NL) + (Ks.getDoubleZ()*Math.pow(VR, n)));
-		
-		if(colorX > 255) colorX = 255;
-		if(colorY > 255) colorY = 255;
-		if(colorZ > 255) colorZ = 255;
-		color.setX(colorX);
-		color.setY(colorY);
-		color.setZ(colorZ);
-		
-		return color;
+		double colorX = intensity.getX()*((Kd.getDoubleX()*NL) + (Ks.getDoubleX()*Math.pow(VR, n)));
+		double colorY = intensity.getY()*((Kd.getDoubleY()*NL) + (Ks.getDoubleY()*Math.pow(VR, n)));
+		double colorZ = intensity.getZ()*((Kd.getDoubleZ()*NL) + (Ks.getDoubleZ()*Math.pow(VR, n)));
+		return new Vector(colorX,colorY,colorZ);
 	}
 	
 	

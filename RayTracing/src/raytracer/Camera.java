@@ -8,7 +8,7 @@ public class Camera {
 	private Vector rightDirection;
 	private Vector vpUp;
 	private double screenWidth = 2;
-	private double screenHeight;
+//	private double screenHeight;
 	
 	
 	public Camera(Vector eye, Vector direction, Vector upDirection){
@@ -31,6 +31,7 @@ public class Camera {
 		
 		// right = towards x up
 		setRightDirection(direction.crossProduct(upDirection)); 
+		upDirection = rightDirection.crossProduct(direction).normalize();
 		
 		// the view plane's up direction is the cross product of the camera's direction and the camera's right direction.
 		setVpUp(direction.crossProduct(rightDirection));
@@ -49,6 +50,7 @@ public class Camera {
 	public void setEye(Vector eye) {
 		this.eye = eye;
 		calcParams();
+		
 	}
 
 	public Vector getDirection() {

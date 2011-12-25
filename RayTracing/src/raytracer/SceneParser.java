@@ -21,6 +21,7 @@ import java.util.List;
 public class SceneParser {
 
 	Scene scene;
+	Camera cam;
 	List<GeometricPrimitive> geoList = new LinkedList<>();
 	List<Light> lightList = new LinkedList<>();
 	int sceneHeight, sceneWidth;
@@ -80,6 +81,8 @@ public class SceneParser {
 			}
 			
 		}
+		scene.setCam(cam);
+		
 		return scene;
 	}
 
@@ -107,12 +110,12 @@ public class SceneParser {
 			else unknownParam = true;
 		}
 		else if(obj.equals("camera")){
-			if(param.equals("eye")) scene.getCam().setEye(valVec);
-			else if(param.equals("direction")) scene.getCam().setDirection(valVec);
-			else if(param.equals("look-at")) scene.getCam().setLookAt(valVec);
-			else if(param.equals("up-direction")) scene.getCam().setUpDirection(valVec);
-			else if(param.equals("screen-dist")) scene.setScreenDistance(val);
-			else if(param.equals("screen-width")) scene.getCam().setScreenWidth(val);
+			if(param.equals("eye")) cam.setEye(valVec);//scene.getCam().setEye(valVec);
+			else if(param.equals("direction")) cam.setDirection(valVec);//scene.getCam().setDirection(valVec);
+			else if(param.equals("look-at")) cam.setLookAt(valVec);//scene.getCam().setLookAt(valVec);
+			else if(param.equals("up-direction")) cam.setUpDirection(valVec);//scene.getCam().setUpDirection(valVec);
+			else if(param.equals("screen-dist")) scene.setScreenDistance(val);//scene.setScreenDistance(val);
+			else if(param.equals("screen-width")) cam.setScreenWidth(val);//scene.getCam().setScreenWidth(val);
 			else unknownParam = true;
 		}
 		else if(obj.equals("light-directed")){
@@ -179,7 +182,7 @@ public class SceneParser {
 
 	private void addObject(String obj) {
 		if(obj.equals("scene")) scene = new Scene(sceneHeight, sceneWidth);
-		else if(obj.equals("camera")) scene.setCam(new Camera());
+		else if(obj.equals("camera")) cam = new Camera();//scene.setCam(new Camera());
 		else if(obj.equals("light-directed")) scene.addLight(new ParallelDirectionalLight());
 		else if(obj.equals("light-point")) scene.addLight(new PointLight());
 		//if(obj.equals("light-area")) return new ;
