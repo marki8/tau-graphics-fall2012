@@ -35,7 +35,7 @@ public abstract class Light {
 		Vector Ka = hit.getMinIntPoint().getGeom().getSurface().getMtlAmbient();
 		
 		if(NL<0) NL*=-1;
-		if(VR<0) VR*=-1;
+		if(VR<0) VR*=0;
 		
 		// TODO: add emition component 
 		// TODO: take in consideration the distance of the lighting 
