@@ -67,8 +67,11 @@ public class Rectangle extends GeometricPrimitive{
 	@Override
 	public IntersectioPoint getIntersection(Ray r) {
 		
-		Vector normalTowordsRay = (normal.dotProduct(r.getDirection()) > 0) ? 
-				normal.scalarMult(-1) : normal ;
+		Vector normalTowordsRay;
+		if ( normal.dotProduct(r.getDirection()) > 0.0)  
+			normalTowordsRay = normal.scalarMult(-1);
+		else
+			normalTowordsRay = normal ;
 		Vector pointOnHalfPlane = Auxiliary.findIntersectionOfVectorAndHalfPlane(r, normalTowordsRay, p1);
 		
 		// TODO: DEAL WITH ALL THE EDGE CASES INFINITY ETC

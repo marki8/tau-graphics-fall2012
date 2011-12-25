@@ -23,17 +23,25 @@ public abstract class Light {
 	
 	public Vector calcColor(Scene scene, Ray ray, Intersection hit, Vector L) {
 		
+		Vector N = hit.getMinIntPoint().getNormal();
+		double NL = N.dotProduct(L.normalize());
+		
+		// if the ray comes from the back of the surface,
+		// or the light is behind it, return BLACK
+		if ( (NL < 0.0) || (ray.getDirection().dotProduct(N) > 0.0) ){
+			// Hit point is on a different side of the surface than the eye
+			return new Vector(0,0,0);
+		}
+		
 		Surface surface = hit.getMinIntPoint().getGeom().getSurface();
 		Vector Kd = surface.getMtlDiffuse(); // ONLY TRUE IF FLAT!!!
 		Vector Ks = surface.getMtlSpecular();
 		double n = surface.getMtlShininess();
-		Vector N = hit.getMinIntPoint().getNormal().normalize();
 		Vector R = Vector.vectorReflection(L,N);
 		Vector V = ray.getDirection().scalarMult(-1).normalize();
 		double VR = V.dotProduct(R);
-		double NL = N.dotProduct(L.normalize());
 		
-		if(NL<0) NL*=-1;
+//		if(NL<0) NL*=-1;
 		if(VR<0) VR=0;
 		
 		// TODO: take in consideration the distance of the lighting 
