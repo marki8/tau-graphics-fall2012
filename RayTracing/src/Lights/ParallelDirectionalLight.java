@@ -1,5 +1,8 @@
 package Lights;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
+import GeometricPrimitives.Cylinder;
 import GeometricPrimitives.GeometricPrimitive;
 import raytracer.Intersection;
 import raytracer.Ray;
@@ -33,6 +36,12 @@ public class ParallelDirectionalLight extends Light {
 	@Override
 	public Vector findLightImpact(Scene scene, Ray ray, Intersection hit) {
 
+		if ( hit.getMinIntPoint().getGeom() instanceof Cylinder ) {
+			if ( hit.getMinIntPoint().getNormal().dotProduct(ray.getDirection()) > 0.0 ) {
+				return new Vector (0,0,0);
+			}
+		}
+		
 		Vector towardsLight = direction.scalarMult(-1);
 		Ray rayFromObjToLight = new Ray(hit.getMinIntPoint().getLocation(), towardsLight);
 		Intersection objToLightInt = Scene.findInteresction(scene, rayFromObjToLight, hit.getMinIntPoint().getGeom());
