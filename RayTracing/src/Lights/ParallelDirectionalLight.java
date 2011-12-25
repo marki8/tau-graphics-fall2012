@@ -43,11 +43,8 @@ public class ParallelDirectionalLight extends Light {
 		}
 		
 		else{
-			return new Vector (0,0,0); // ????
+			return new Vector (0,0,0);
 		}
-		
-		
-
 	}
 	
 	

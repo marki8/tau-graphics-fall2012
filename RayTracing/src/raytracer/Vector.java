@@ -14,6 +14,10 @@ public class Vector {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		update();
+	}
+	
+	private void update() {
 		this.len = Math.sqrt(x*x + y*y + z*z);
 	}
 	
@@ -68,6 +72,7 @@ public class Vector {
 	
 	public void setX(double x) {
 		this.x = x;
+		update();
 	}
 
 	public int getY() {
@@ -80,6 +85,7 @@ public class Vector {
 	
 	public void setY(double y) {
 		this.y = y;
+		update();
 	}
 	
 	public int getZ() {
@@ -92,6 +98,7 @@ public class Vector {
 	
 	public void setZ(double z) {
 		this.z = z;
+		update();
 	}
 	
 	public static Vector vectorReflection(Vector v, Vector normal) {
