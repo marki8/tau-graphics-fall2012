@@ -41,8 +41,6 @@ public class Box extends GeometricPrimitive {
 		rectList.add( new Rectangle(p0, p1, p3) );
 		rectList.add( new Rectangle(p0, p3, p2) );
 		
-		// edges
-		Vector p1p0 = p1.substract(p0);
 		Vector p2p0 = p2.substract(p0);
 		Vector p3p0 = p3.substract(p0);
 		

@@ -1,9 +1,5 @@
 package Lights;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
-
-import GeometricPrimitives.Cylinder;
-import GeometricPrimitives.GeometricPrimitive;
 import raytracer.Intersection;
 import raytracer.Ray;
 import raytracer.Scene;

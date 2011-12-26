@@ -2,8 +2,6 @@ package raytracer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.StringReader;
-
 import GeometricPrimitives.Box;
 import GeometricPrimitives.Circle;
 import GeometricPrimitives.Cylinder;
@@ -14,7 +12,6 @@ import Lights.Light;
 import Lights.ParallelDirectionalLight;
 import Lights.PointLight;
 
-import java.io.StreamTokenizer;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,9 +30,7 @@ public class SceneParser {
 
 	public Scene parse(BufferedReader br, int height, int width) throws IOException {
 
-		String line, obj = null, param, valueStr;
-		double value;
-		
+		String line, obj = null, param;
 		sceneHeight = height;
 		sceneWidth = width;
 		

@@ -75,21 +75,6 @@ public class Cylinder extends GeometricPrimitive {
 
 
 
-	private Vector getNormal(Vector point) {
-		
-		Vector d = start.substract(point);
-		//ray.getPointAtDistance(distance);
-		Vector v = direction.scalarMult(-length);
-		double t = v.dotProduct(d)/v.dotProduct(v);
-		Ray r1 = new Ray(start,v);
-		Vector pp = r1.retrievePoint(t);
-		pp = pp.substract(point);
-		
-		return pp.normalize();
-	}
-
-
-
 	private boolean pointOnCylinder(Vector point) {
 		Vector diff = point.substract(start);
 		double projection = direction.dotProduct(diff);
