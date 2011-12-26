@@ -4,9 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import GeometricPrimitives.GeometricPrimitive;
-import GeometricPrimitives.Rectangle;
 import Lights.Light;
-import raytracer.Auxiliary;
 
 public class Scene {
 

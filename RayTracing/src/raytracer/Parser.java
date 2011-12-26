@@ -5,6 +5,11 @@ import java.io.*;
 public class Parser 
 {
 	public static class ParseException extends Exception {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 4271081237537316637L;
+
 		public ParseException(String msg) {  super(msg); }
 	}
 	

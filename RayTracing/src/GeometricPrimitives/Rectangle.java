@@ -10,7 +10,6 @@ public class Rectangle extends GeometricPrimitive{
 	private Vector p0 = new Vector(0,0,0);
 	private Vector p1 = new Vector(0,0,0); 
 	private Vector p2 = new Vector(0,0,0);
-	private Vector p3 = new Vector(0,0,0);
 	private Vector normal = new Vector(0,0,0);
 	
 	/**
@@ -27,7 +26,6 @@ public class Rectangle extends GeometricPrimitive{
 	}
 
 	private void update() {
-		p3 = p1.add(p2.substract(p0));
 		setNormal((p0.substract(p1)).crossProduct(p0.substract(p2))); // (p0-p1)X(p0-p2) normalized
 	}
 	
