@@ -11,6 +11,7 @@ import GeometricPrimitives.Sphere;
 import Lights.Light;
 import Lights.ParallelDirectionalLight;
 import Lights.PointLight;
+import Lights.AreaLight;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -127,6 +128,14 @@ public class SceneParser {
 			else if(param.equals("attenuation")) ((PointLight)scene.lightList.get(scene.lightList.size()-1)).setAttenuation(valVec);
 			else unknownParam = true;
 		}
+		else if(obj.equals("light-area")){
+			if(param.equals("p0")) ((AreaLight)scene.lightList.get(scene.lightList.size()-1)).setP0(valVec);
+			else if(param.equals("p1")) ((AreaLight)scene.lightList.get(scene.lightList.size()-1)).setP1(valVec);
+			else if(param.equals("p2")) ((AreaLight)scene.lightList.get(scene.lightList.size()-1)).setP2(valVec);
+			else if(param.equals("grid-width")) ((AreaLight)scene.lightList.get(scene.lightList.size()-1)).setN((int)val);
+			else if(param.equals("color")) scene.lightList.get(scene.lightList.size()-1).setIntensity(valVec);
+			else unknownParam = true;
+		}
 		if(obj.equals("disc") || obj.equals ("sphere") || obj.equals ("box") || obj.equals ("cylinder") || obj.equals ("rectangle") || obj.equals ("circle")){
 			if(param.equals("mtl-type")) scene.geoList.get(scene.geoList.size()-1).getSurface().setSurfaceType(args[0]);
 			else if(param.equals("mtl-diffuse")) scene.geoList.get(scene.geoList.size()-1).getSurface().setMtlDiffuse(valVec);
@@ -183,7 +192,7 @@ public class SceneParser {
 		else if(obj.equals("camera")) cam = new Camera();//scene.setCam(new Camera());
 		else if(obj.equals("light-directed")) scene.addLight(new ParallelDirectionalLight());
 		else if(obj.equals("light-point")) scene.addLight(new PointLight());
-		//if(obj.equals("light-area")) return new ;
+		else if(obj.equals("light-area")) scene.addLight(new AreaLight()) ;
 		else if(obj.equals("rectangle")) scene.addGeomObject(new Rectangle());
 		else if(obj.equals("circle")) scene.addGeomObject(new Circle());
 		else if(obj.equals("disc")) scene.addGeomObject(new Circle());

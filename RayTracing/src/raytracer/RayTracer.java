@@ -54,7 +54,7 @@ public class RayTracer {
 			for(int x = 0; x < dat.width; ++x)
 			{	
 				// TO-ADD: get the color for this pixel (shoot rays etc')
-				Vector mycol = m_scene.getColor(m_scene, x, y);
+				Vector mycol = m_scene.getColor(x, y);
 				
 				// set the image color for this pixel.
 				int r = mycol.getX();
