@@ -74,27 +74,34 @@ public class Scene {
 		vpTopRight = top_middle.add(right_middle.substract(vpCenter));
 	}
 
-	public Vector getColor(Scene scene, int x, int y) {
+	public Vector getColor(int x, int y) {
 		
 		Vector pixelColor = new Vector(0,0,0);
 		int sups = getSuperSampling();
 		
 		for ( int i = 0 ; i < sups ; i++ ){
 			for ( int j = 0 ; j < sups ; j++ ) {
-				Vector color = new Vector (0,0,0);
 				Ray ray = constructRayThroughPixel((double)x+((double)i/sups), (double)y+((double)j/sups));
+				Vector color = rayColor(ray, null);
+
 				
-				Intersection hit = findInteresction(scene, ray);
+				/*Intersection hit = findInteresction(this, ray);
 				if ( hit.noIntersection() )
 				{
-					color = getBackgroundColor();
-					pixelColor = pixelColor.add(color);
+					pixelColor = pixelColor.add(getBackgroundColor());
 					continue;
 				}
 				
 				for(Light l: lightList){
-					Vector impact = l.findLightImpact(scene, ray, hit);
+					Vector impact = l.findLightImpact(this, ray, hit);
 					color = color.add(impact);
+				}
+				
+				if ( hit.getMinIntPoint().getGeom().getSurface().getReflectance() > 0 ){
+					Vector refDir = 
+							Vector.vectorReflection(ray.getDirection().scalarMult(-1), 
+									hit.getMinIntPoint().getNormal() );
+					Ray refl = new Ray(hit.getMinIntPoint().getLocation(), refDir);
 				}
 				
 				Vector Ka = hit.getMinIntPoint().getGeom().getSurface().getMtlAmbient();
@@ -106,7 +113,7 @@ public class Scene {
 				if ( color.getDoubleY() > 255.0 ) color.setY(255);
 				if ( color.getDoubleZ() > 255.0 ) color.setZ(255);
 				// TODO: add emition component 
-				
+				*/
 				pixelColor = pixelColor.add(color);
 			}
 		}
@@ -115,6 +122,43 @@ public class Scene {
 		
 	}
 
+	private Vector rayColor(Ray ray, GeometricPrimitive originGeom) {
+		Intersection hit = findInteresction(this, ray, originGeom);
+		Vector color = new Vector(0,0,0);
+		if ( hit.noIntersection() )
+		{
+			return getBackgroundColor();
+		}
+		
+		for(Light l: lightList){
+			Vector impact = l.findLightImpact(this, ray, hit);
+			color = color.add(impact);
+		}
+		
+		double Ks = hit.getMinIntPoint().getGeom().getSurface().getReflectance(); 
+		if ( Ks > 0 ){
+			Vector refDir = 
+					Vector.vectorReflection(ray.getDirection().scalarMult(-1), 
+							hit.getMinIntPoint().getNormal() );
+			Ray refl = new Ray(hit.getMinIntPoint().getLocation(), refDir);
+			color = color.add(
+					rayColor(refl, hit.getMinIntPoint().getGeom())
+					.scalarMult(Ks));
+		}
+		
+		Vector Ka = hit.getMinIntPoint().getGeom().getSurface().getMtlAmbient();
+		double ambientX = (Ka.getDoubleX() * getAmbientLight().getDoubleX());		
+		double ambientY = (Ka.getDoubleY() * getAmbientLight().getDoubleY());		
+		double ambientZ = (Ka.getDoubleZ() * getAmbientLight().getDoubleZ());		
+		color = color.add(new Vector(ambientX, ambientY, ambientZ));
+		if ( color.getDoubleX() > 255.0 ) color.setX(255);
+		if ( color.getDoubleY() > 255.0 ) color.setY(255);
+		if ( color.getDoubleZ() > 255.0 ) color.setZ(255);
+		// TODO: add emition component 
+		
+		return color;
+	}
+	
 	public static Intersection findInteresction(Scene scene, Ray ray) {
 //		Intersection intersection = new Intersection(ray.getOrigin());
 //		for ( GeometricPrimitive g : scene.geoList ) {

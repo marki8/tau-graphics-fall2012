@@ -1,0 +1,162 @@
+scene:
+background-col=0.3 0.3 0.6
+ambient-light=1 1 1
+
+camera:
+eye = -1 1.7 1
+#eye = 0 0.5 2
+look-at = 0 0.5 0
+screen-dist = 1
+up-direction = 0 1 0
+
+rectangle:
+p0=-1.5 0 1.5
+p1=2 0 1.5
+p2=-1.5 0 -2
+mtl-diffuse=0.2 0.2 0.2
+
+
+cylinder:
+start=-1.1 0 -1.1
+radius=0.1
+direction=0 1 0
+length=0.1
+mtl-diffuse=1 0.22 0
+
+disc:
+center=-1.1 0.1 -1.1
+radius=0.1
+normal=0 1 0
+mtl-diffuse=1 0.22 0
+mtl-shininess = 20
+
+
+cylinder:
+start=-0.8 0 -0.8
+radius=0.1
+direction=0 1 0
+length=0.2
+mtl-diffuse=1 0.22 0
+
+disc:
+center=-0.8 0.2 -0.8
+radius=0.1
+normal=0 1 0
+mtl-diffuse=1 0.22 0
+mtl-shininess = 20
+
+cylinder:
+start=-0.2 0 -0.2
+radius=0.1
+direction=0 1 0
+length=0.6
+mtl-diffuse=1 0.22 0
+
+disc:
+center=-0.2 0.6 -0.2
+radius=0.1
+normal=0 1 0
+mtl-diffuse=1 0.22 0
+mtl-shininess = 20
+
+cylinder:
+start=-0.5 0.0 -0.5
+radius=0.1
+direction=0 1 0
+length=0.4
+mtl-diffuse=1 0.22 0
+
+disc:
+center=-0.5 0.4 -0.5
+radius=0.1
+normal=0 1 0
+mtl-diffuse=1 0.22 0
+mtl-shininess = 20
+
+cylinder:
+start=0 0 0
+radius=0.1
+direction=0 1 0
+length=0.8
+mtl-diffuse=1 0.22 0
+
+disc:
+center=0 0.8 0
+radius=0.1
+normal=0 1 0
+mtl-diffuse=1 0.22 0
+mtl-shininess = 20
+
+
+
+
+
+
+cylinder:
+start=1.1 0 1.1
+radius=0.1
+direction=0 1 0
+length=0.1
+mtl-diffuse=1 0.22 0
+
+disc:
+center=1.1 0.1 1.1
+radius=0.1
+normal=0 1 0
+mtl-diffuse=1 0.22 0
+mtl-shininess = 20
+
+
+cylinder:
+start=0.8 0 0.8
+radius=0.1
+direction=0 1 0
+length=0.2
+mtl-diffuse=1 0.22 0
+
+disc:
+center=0.8 0.2 0.8
+radius=0.1
+normal=0 1 0
+mtl-diffuse=1 0.22 0
+mtl-shininess = 20
+
+cylinder:
+start=0.2 0 0.2
+radius=0.1
+direction=0 1 0
+length=0.6
+mtl-diffuse=1 0.22 0
+
+disc:
+center=0.2 0.6 0.2
+radius=0.1
+normal=0 1 0
+mtl-diffuse=1 0.22 0
+mtl-shininess = 20
+
+cylinder:
+start=0.5 0.0 0.5
+radius=0.1
+direction=0 1 0
+length=0.4
+mtl-diffuse=1 0.22 0
+
+disc:
+center=0.5 0.4 0.5
+radius=0.1
+normal=0 1 0
+mtl-diffuse=1 0.22 0
+mtl-shininess = 20
+
+
+
+light-directed:
+direction=-1.2 -1.5 1.2
+color = 1 1 1
+
+
+light-directed:
+direction=0 0 1
+color = 1 1 1
+
