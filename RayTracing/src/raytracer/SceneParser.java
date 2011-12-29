@@ -25,14 +25,13 @@ public class SceneParser {
 	List<GeometricPrimitive> geoList = new LinkedList<>();
 	List<Light> lightList = new LinkedList<>();
 	int sceneHeight, sceneWidth;
+	String folder = null;
 	
-	
-	public SceneParser() {
-
+	public SceneParser(String folder) {
+		this.folder = folder;
 	}
 
 	public Scene parse(BufferedReader br, int height, int width) throws IOException {
-
 		String line, obj = null, param;
 		sceneHeight = height;
 		sceneWidth = width;
@@ -107,7 +106,14 @@ public class SceneParser {
 		
 		if(obj.equals("scene")){
 			if(param.equals("background-col")) scene.setBackgroundColor(valVec);
-			else if(param.equals("background-tex")) scene.setBackgroundTex(args[0]);
+			else if(param.equals("background-tex")){
+				if(args[0].contains(":")){ // full path
+					scene.setBackgroundTex(args[0]);
+				}
+				else{ // just file name
+					scene.setBackgroundTex(folder + args[0]);
+				}
+			}
 			else if(param.equals("ambient-light")) scene.setAmbientLight(valVec);
 			else if(param.equals("super-samp-width")) scene.setSuperSampling((int) val);
 			else if(param.equals("use-acceleration")) scene.setUseAcceleration((int) val);
@@ -151,7 +157,14 @@ public class SceneParser {
 			else if(param.equals("checkers-size")) scene.geoList.get(scene.geoList.size()-1).getSurface().setCheckersSize((int)val);
 			else if(param.equals("checkers-diffuse1")) scene.geoList.get(scene.geoList.size()-1).getSurface().setCheckersDiffuse1(valVec);
 			else if(param.equals("checkers-diffuse2")) scene.geoList.get(scene.geoList.size()-1).getSurface().setCheckersDiffuse2(valVec);
-			else if(param.equals("texture")) scene.geoList.get(scene.geoList.size()-1).getSurface().setTexture(args[0]);
+			else if(param.equals("texture")){
+				if(args[0].contains(":")){ // full path
+					scene.geoList.get(scene.geoList.size()-1).getSurface().setTexture(args[0]);
+				}
+				else{ // just file name
+					scene.geoList.get(scene.geoList.size()-1).getSurface().setTexture(folder + args[0]);
+				}
+			}
 			else if(param.equals("reflectance")) scene.geoList.get(scene.geoList.size()-1).getSurface().setReflectance(val);
 			else notMtl = true;
 		}

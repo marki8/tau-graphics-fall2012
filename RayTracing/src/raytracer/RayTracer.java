@@ -14,6 +14,7 @@ public class RayTracer {
 	 * @param args
 	 */
 	static Display display;
+	String folder = null;
 	
 	public static void main(String[] args) 
 	{
@@ -34,7 +35,7 @@ public class RayTracer {
 //		try {
 			// TO-ADD: instantiate your Parser inherited class and invoke it.
 //			SceneParser f = new SceneParser(m_scene);
-			SceneParser f = new SceneParser();
+			SceneParser f = new SceneParser(folder);
 			Scene m_scene = f.parse(new BufferedReader(new StringReader(m_sceneText.getText())), dat.height, dat.width );
 //			throw new IOException();
 //		} catch (IOException e) {
@@ -202,8 +203,10 @@ public class RayTracer {
 			{
 				FileDialog dlg = new FileDialog(shell, SWT.OPEN);
 				dlg.setText("Open Model");
+
 				dlg.setFilterExtensions(new String[] { "*.txt", "*.*" });
 				String selected = dlg.open();
+				folder = selected.substring(0, selected.lastIndexOf('\\')+1);
 				if (selected != null)
 					openFile(selected);
 				
