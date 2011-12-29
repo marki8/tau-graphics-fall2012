@@ -16,6 +16,8 @@ import Lights.AreaLight;
 import java.util.LinkedList;
 import java.util.List;
 
+import raytracer.Surface.mtlType;
+
 public class SceneParser {
 
 	Scene scene;
@@ -90,11 +92,14 @@ public class SceneParser {
 		double val=0;
 		boolean unknownParam = false, notMtl = false, notShape = false;
 		Vector valVec = new Vector(0,0,0);
-		if(args.length == 1) {
+		if(args.length == 1 && !param.equals("background-tex") && !param.equals("mtl-type") && !param.equals("texture")) {
 			val = Double.parseDouble(args[0]);
 		}
 		else if(args.length == 3){
 			valVec = new Vector(Double.parseDouble(args[0]), Double.parseDouble(args[1]),Double.parseDouble(args[2]));
+		}
+		else if(args.length == 1 && (param.equals("background-tex") || param.equals("mtl-type") || param.equals("texture"))){
+			
 		}
 		else{
 			throw new Error("Wrong number of parameters");
