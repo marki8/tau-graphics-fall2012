@@ -26,7 +26,6 @@ public class Surface {
 	private String texture = null;
 	private double reflectance = 0;
 	
-	@SuppressWarnings("unused")
 	private BufferedImage textureImg;
 	
 	public Surface() {
