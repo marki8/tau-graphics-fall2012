@@ -3,6 +3,13 @@ package raytracer;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
+
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.RGB;
+
 import GeometricPrimitives.GeometricPrimitive;
 import Lights.Light;
 
@@ -29,6 +36,8 @@ public class Scene {
 	private double screenTosceneFactor = 1;
 	private double paneWidth;
 	private double paneHeight;
+	
+	private ImageData textureImg = null;
 	
 	public Scene(int sceneHeight, int sceneWidth) {
 		setCanvasSize(sceneHeight, sceneWidth);
@@ -82,7 +91,7 @@ public class Scene {
 		for ( int i = 0 ; i < sups ; i++ ){
 			for ( int j = 0 ; j < sups ; j++ ) {
 				Ray ray = constructRayThroughPixel((double)x+((double)i/sups), (double)y+((double)j/sups));
-				Vector color = rayColor(ray, null);
+				Vector color = rayColor(ray, null, x, y);
 
 				
 				/*Intersection hit = findInteresction(this, ray);
@@ -122,11 +131,22 @@ public class Scene {
 		
 	}
 
-	private Vector rayColor(Ray ray, GeometricPrimitive originGeom) {
+	private Vector rayColor(Ray ray, GeometricPrimitive originGeom, int x, int y) {
 		Intersection hit = findInteresction(this, ray, originGeom);
 		Vector color = new Vector(0,0,0);
 		if ( hit.noIntersection() )
 		{
+			if(textureImg != null){
+				int rgb = textureImg.getPixel(x, y);
+//				double r = (rgb>>16)&0xFF;
+//				double g = (rgb>>8)&0xFF;
+//				double b = (rgb&0xFF);
+				double r = ((rgb & 0xFF0000)>>16);
+				double g = ((rgb & 0x00FF00)>>8 );
+				double b = (rgb & 0x0000FF);
+
+				return(new Vector(r,g,b));
+			}
 			return getBackgroundColor();
 		}
 		
@@ -142,7 +162,7 @@ public class Scene {
 							hit.getMinIntPoint().getNormal() );
 			Ray refl = new Ray(hit.getMinIntPoint().getLocation(), refDir);
 			color = color.add(
-					rayColor(refl, hit.getMinIntPoint().getGeom())
+					rayColor(refl, hit.getMinIntPoint().getGeom(), x, y)
 					.scalarMult(Ks));
 		}
 		
@@ -235,6 +255,10 @@ public class Scene {
 
 	public void setBackgroundTex(String backgroundTex) {
 		this.backgroundTex = backgroundTex;
+		textureImg = new ImageData(backgroundTex);
+		textureImg = textureImg.scaledTo(width, height);
+
+
 	}
 
 	public Vector getAmbientLight() {
