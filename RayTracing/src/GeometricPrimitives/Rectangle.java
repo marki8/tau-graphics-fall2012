@@ -87,11 +87,28 @@ public class Rectangle extends GeometricPrimitive{
 		}
 	}
 
-	private boolean pointOnRect(Vector p) {
+	public boolean pointOnRect(Vector p) {
 		
-		Vector v0 = p2.substract(p0);
-		Vector v1 = p1.substract(p0);
-		Vector v2 = p.substract(p0);
+		Vector paramVec = getParam(p);
+		double u = paramVec.getDoubleX();
+		double v = paramVec.getDoubleY();
+		
+		return (u >= 0) && (v >= 0) && (u <= 1) && (v <= 1); 
+	}
+
+	public Vector getNormal() {
+		return normal;
+	}
+
+	public void setNormal(Vector normal) {
+		this.normal = normal.normalize();
+	}
+
+	@Override
+	public Vector getParam(Vector interPoint) {
+		Vector v0 = p1.substract(p0);
+		Vector v1 = p2.substract(p0);
+		Vector v2 = interPoint.substract(p0);
 		double v1v1 = v1.dotProduct(v1);
 		double v2v0 = v2.dotProduct(v0);
 		double v1v0 = v1.dotProduct(v0);
@@ -103,16 +120,7 @@ public class Rectangle extends GeometricPrimitive{
 		//v = ((v0.v0)(v2.v1)-(v0.v1)(v2.v0)) / ((v0.v0)(v1.v1) - (v0.v1)(v1.v0))
 		double u = (v1v1*v2v0 - v1v0*v2v1) / (v0v0*v1v1 - v0v1*v1v0);
 		double v = (v0v0*v2v1 - v0v1*v2v0) / (v0v0*v1v1 - v0v1*v1v0);
-
-		return (u >= 0) && (v >= 0) && (u <= 1) && (v <= 1); 
-	}
-
-	public Vector getNormal() {
-		return normal;
-	}
-
-	public void setNormal(Vector normal) {
-		this.normal = normal.normalize();
+		return new Vector(u,v,0);
 	}
 	
 }

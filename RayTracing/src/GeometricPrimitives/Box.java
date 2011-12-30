@@ -105,4 +105,14 @@ public class Box extends GeometricPrimitive {
 		updateSides();
 	}
 
+	@Override
+	public Vector getParam(Vector interPoint) {
+		for(Rectangle r : rectList){
+			if(r.pointOnRect(interPoint)){
+				return r.getParam(interPoint);
+			}
+		}
+		return null;
+	}
+
 }

@@ -138,16 +138,13 @@ public class Scene {
 		{
 			if(textureImg != null){
 				int rgb = textureImg.getPixel(x, y);
-//				double r = (rgb>>16)&0xFF;
-//				double g = (rgb>>8)&0xFF;
-//				double b = (rgb&0xFF);
 				double r = ((rgb & 0xFF0000)>>16);
 				double g = ((rgb & 0x00FF00)>>8 );
 				double b = (rgb & 0x0000FF);
 
 				return(new Vector(r,g,b));
 			}
-			return getBackgroundColor();
+			else return getBackgroundColor();
 		}
 		
 		for(Light l: lightList){

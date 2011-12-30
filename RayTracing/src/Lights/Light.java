@@ -1,10 +1,13 @@
 package Lights;
 
+import org.eclipse.swt.graphics.ImageData;
+
 import raytracer.Intersection;
 import raytracer.Ray;
 import raytracer.Scene;
 import raytracer.Surface;
 import raytracer.Vector;
+import raytracer.Surface.mtlType;
 
 public abstract class Light {
 	
@@ -34,7 +37,32 @@ public abstract class Light {
 		}
 		
 		Surface surface = hit.getMinIntPoint().getGeom().getSurface();
-		Vector Kd = surface.getMtlDiffuse(); // ONLY TRUE IF FLAT!!!
+		Vector Kd = new Vector(0,0,0);
+		if(surface.getSurfaceType() ==  mtlType.FLAT){
+			Kd = surface.getMtlDiffuse();
+		}
+		else if (surface.getSurfaceType() ==  mtlType.TEXTURE){
+			
+			ImageData textureImg = surface.getTextureImg();
+			Vector paramVec = hit.getMinIntPoint().getGeom().getParam(hit.getMinIntPoint().getLocation());
+			int x = (int) (paramVec.getDoubleX() * textureImg.width);
+			int y = (int) (paramVec.getDoubleY() * textureImg.height);
+			if(x<0 || x>(textureImg.width-1) || y<0 || y>(textureImg.height-1)) {
+				Kd = new Vector(0,0,0);
+			} 
+			else {
+				int rgb = textureImg.getPixel(x, y);
+				double r = ((rgb & 0xFF0000)>>16);
+				double g = ((rgb & 0x00FF00)>>8 );
+				double b = (rgb & 0x0000FF);
+
+				Kd = new Vector(r,g,b).scalarMult(((double)1/255));
+			}
+		}
+		else if (surface.getSurfaceType() ==  mtlType.CHECKERS){
+			//TODO: everything
+		}
+		
 		Vector Ks = surface.getMtlSpecular();
 		double n = surface.getMtlShininess();
 		Vector R = Vector.vectorReflection(L,N);

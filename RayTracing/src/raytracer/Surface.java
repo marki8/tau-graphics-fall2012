@@ -30,7 +30,6 @@ public class Surface {
 	private double reflectance = 0;
 	
 	private ImageData textureImg;
-	
 	public Surface() {
 		
 	}
@@ -106,7 +105,7 @@ public class Surface {
 	public void setTexture(String texture) {
 		this.texture = texture;
 		//textureImg = ImageIO.read(new File(texture));
-		textureImg = new ImageData(texture);
+		setTextureImg(new ImageData(texture));
 	}
 	
 	public double getReflectance() {
@@ -125,5 +124,13 @@ public class Surface {
 		if(type.equals("flat")) surfaceType = mtlType.FLAT;
 		if(type.equals("checkers")) surfaceType = mtlType.CHECKERS;
 		if(type.equals("texture")) surfaceType = mtlType.TEXTURE;
+	}
+
+	public ImageData getTextureImg() {
+		return textureImg;
+	}
+
+	public void setTextureImg(ImageData textureImg) {
+		this.textureImg = textureImg;
 	}
 }

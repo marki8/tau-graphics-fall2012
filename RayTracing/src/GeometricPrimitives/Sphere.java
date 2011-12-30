@@ -73,4 +73,11 @@ public class Sphere extends GeometricPrimitive {
 		this.radius = radius;
 	}
 
+
+	@Override
+	public Vector getParam(Vector interPoint) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
