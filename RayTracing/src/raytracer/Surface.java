@@ -3,8 +3,11 @@ package raytracer;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
+
+import org.eclipse.swt.graphics.ImageData;
 
 public class Surface {
 	
@@ -26,7 +29,7 @@ public class Surface {
 	private String texture = null;
 	private double reflectance = 0;
 	
-	private BufferedImage textureImg;
+	private ImageData textureImg;
 	
 	public Surface() {
 		
@@ -102,13 +105,8 @@ public class Surface {
 	
 	public void setTexture(String texture) {
 		this.texture = texture;
-		try {
-			textureImg = ImageIO.read(new File(texture));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		
+		//textureImg = ImageIO.read(new File(texture));
+		textureImg = new ImageData(texture);
 	}
 	
 	public double getReflectance() {
