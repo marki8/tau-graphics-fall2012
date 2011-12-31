@@ -2,6 +2,7 @@ package GeometricPrimitives;
 
 import raytracer.Auxiliary;
 import raytracer.IntersectioPoint;
+import raytracer.Intersection;
 import raytracer.Ray;
 import raytracer.Vector;
 
@@ -132,9 +133,25 @@ public class Cylinder extends GeometricPrimitive {
 
 
 	@Override
-	public Vector getParam(Vector interPoint) {
-		// TODO Auto-generated method stub
-		return null;
+	public Vector getTextureParam(Intersection hit) {
+		Vector intPt = hit.getMinIntPoint().getLocation().substract(getStart());
+		double u = intPt.dotProduct(getDirection()) / getLength();
+		Vector D1;
+		D1 = getDirection().crossProduct(new Vector(0,1,0)).normalize();
+		if ( D1.equals(new Vector(0,0,0)) ) // normal is parallel to X axis
+			D1 = getDirection().crossProduct(new Vector(1,0,0)).normalize();
+		Vector D2 = D1.crossProduct(getDirection()).normalize();
+		double xCoord = intPt.dotProduct(D1);
+		double yCoord = intPt.dotProduct(D2);
+		double theta = Math.atan2(yCoord,xCoord);
+		double v;
+		if ( theta >= 0.0 )
+			v = theta / (2.0*Math.PI);
+		else
+			v = ((2.0*Math.PI) + theta) / (2.0*Math.PI);
+		if ( u < 0.0 )
+			u = 0;
+		return new Vector(v,u,0);
 	}
 
 }

@@ -1,6 +1,7 @@
 package GeometricPrimitives;
 
 import raytracer.IntersectioPoint;
+import raytracer.Intersection;
 import raytracer.Ray;
 import raytracer.Surface;
 import raytracer.Vector;
@@ -19,5 +20,5 @@ public abstract class GeometricPrimitive {
 	
 	public abstract IntersectioPoint getIntersection(Ray r);
 	
-	public abstract Vector getParam(Vector interPoint);
+	public abstract Vector getTextureParam(Intersection hit);
 }

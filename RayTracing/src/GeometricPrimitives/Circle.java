@@ -2,6 +2,7 @@ package GeometricPrimitives;
 
 import raytracer.Auxiliary;
 import raytracer.IntersectioPoint;
+import raytracer.Intersection;
 import raytracer.Ray;
 import raytracer.Vector;
 
@@ -67,11 +68,24 @@ public class Circle extends GeometricPrimitive {
 		this.radius = radius;
 	}
 
-
 	@Override
-	public Vector getParam(Vector interPoint) {
-		// TODO Auto-generated method stub
-		return null;
+	public Vector getTextureParam(Intersection hit) {
+		Vector intPt = hit.getMinIntPoint().getLocation();
+		double u = intPt.distance(center) / radius;
+		Vector D1;
+		D1 = getNormal().crossProduct(new Vector(0,1,0)).normalize();
+		if ( D1.equals(new Vector(0,0,0)) ) // normal is parallel to X axis
+			D1 = getNormal().crossProduct(new Vector(1,0,0)).normalize();
+		Vector D2 = D1.crossProduct(getNormal()).normalize();
+		double xCoord = intPt.dotProduct(D1);
+		double yCoord = intPt.dotProduct(D2);
+		double theta = Math.atan2(yCoord,xCoord);
+		double v;
+		if ( theta >= 0 )
+			v = theta / (2.0*Math.PI);
+		else
+			v = ((2.0*Math.PI) + theta) / (2.0*Math.PI);
+		
+		return new Vector(v,u,0);
 	}
-
 }
