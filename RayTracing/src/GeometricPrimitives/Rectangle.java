@@ -2,6 +2,7 @@ package GeometricPrimitives;
 
 import raytracer.Auxiliary;
 import raytracer.IntersectioPoint;
+import raytracer.Intersection;
 import raytracer.Ray;
 import raytracer.Vector;
 
@@ -104,7 +105,6 @@ public class Rectangle extends GeometricPrimitive{
 		this.normal = normal.normalize();
 	}
 
-	@Override
 	public Vector getParam(Vector interPoint) {
 		Vector v0 = p1.substract(p0);
 		Vector v1 = p2.substract(p0);
@@ -121,6 +121,21 @@ public class Rectangle extends GeometricPrimitive{
 		double u = (v1v1*v2v0 - v1v0*v2v1) / (v0v0*v1v1 - v0v1*v1v0);
 		double v = (v0v0*v2v1 - v0v1*v2v0) / (v0v0*v1v1 - v0v1*v1v0);
 		return new Vector(u,v,0);
+		
 	}
-	
+
+	@Override
+	public Vector getTextureParam(Intersection hit) {
+		Vector intPt = hit.getMinIntPoint().getLocation();
+		Vector v0 = p1.substract(p0);
+		Vector v1 = p2.substract(p0);
+		Vector v2 = intPt.substract(p0);
+		double len1 = v0.length();
+		double len2 = v1.length();
+		v0 = v0.normalize();
+		v1 = v1.normalize();
+		double u = v0.dotProduct(v2) / len1;
+		double v = v1.dotProduct(v2) / len2;
+		return new Vector(u,v,0);
+	}
 }

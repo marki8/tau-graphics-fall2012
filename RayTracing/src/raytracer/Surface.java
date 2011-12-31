@@ -29,7 +29,7 @@ public class Surface {
 	private String texture = null;
 	private double reflectance = 0;
 	
-	private ImageData textureImg;
+	private BufferedImage textureImg;
 	public Surface() {
 		
 	}
@@ -105,7 +105,13 @@ public class Surface {
 	public void setTexture(String texture) {
 		this.texture = texture;
 		//textureImg = ImageIO.read(new File(texture));
-		setTextureImg(new ImageData(texture));
+		try {
+			setTextureImg(ImageIO.read(new File(texture)));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
 	}
 	
 	public double getReflectance() {
@@ -126,11 +132,11 @@ public class Surface {
 		if(type.equals("texture")) surfaceType = mtlType.TEXTURE;
 	}
 
-	public ImageData getTextureImg() {
+	public BufferedImage getTextureImg() {
 		return textureImg;
 	}
 
-	public void setTextureImg(ImageData textureImg) {
+	public void setTextureImg(BufferedImage textureImg) {
 		this.textureImg = textureImg;
 	}
 }

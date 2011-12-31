@@ -154,7 +154,7 @@ public class SceneParser {
 			else if(param.equals("mtl-ambient")) scene.geoList.get(scene.geoList.size()-1).getSurface().setMtlAmbient(valVec);
 			else if(param.equals("mtl-emission")) scene.geoList.get(scene.geoList.size()-1).getSurface().setMtlEmission(valVec);
 			else if(param.equals("mtl-shininess")) scene.geoList.get(scene.geoList.size()-1).getSurface().setMtlShininess(val);
-			else if(param.equals("checkers-size")) scene.geoList.get(scene.geoList.size()-1).getSurface().setCheckersSize((int)val);
+			else if(param.equals("checkers-size")) scene.geoList.get(scene.geoList.size()-1).getSurface().setCheckersSize(val);
 			else if(param.equals("checkers-diffuse1")) scene.geoList.get(scene.geoList.size()-1).getSurface().setCheckersDiffuse1(valVec);
 			else if(param.equals("checkers-diffuse2")) scene.geoList.get(scene.geoList.size()-1).getSurface().setCheckersDiffuse2(valVec);
 			else if(param.equals("texture")){

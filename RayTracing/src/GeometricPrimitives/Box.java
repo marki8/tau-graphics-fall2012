@@ -10,7 +10,7 @@ import raytracer.Vector;
 
 public class Box extends GeometricPrimitive {
 
-	private List<Rectangle> rectList = new ArrayList<>(6);
+	private List<Rectangle> rectList;
 	private Vector p0 = new Vector(0,0,0);
 	private Vector p1 = new Vector(0,0,0); 
 	private Vector p2 = new Vector(0,0,0);
@@ -36,10 +36,12 @@ public class Box extends GeometricPrimitive {
 	}
 
 	private void updateSides(){
+		rectList = new ArrayList<>(6);
+		
 		// Immediate sides
-		rectList.add( new Rectangle(p0, p2, p1) );
-		rectList.add( new Rectangle(p0, p1, p3) );
-		rectList.add( new Rectangle(p0, p3, p2) );
+		rectList.add( new Rectangle(p0, p1, p2) );
+		rectList.add( new Rectangle(p0, p3, p1) );
+		rectList.add( new Rectangle(p0, p2, p3) );
 		
 		Vector p2p0 = p2.substract(p0);
 		Vector p3p0 = p3.substract(p0);
@@ -47,7 +49,7 @@ public class Box extends GeometricPrimitive {
 		// calculated sides
 		rectList.add( new Rectangle(p3, p3.add(p2p0), p1.add(p3p0)) );
 		rectList.add( new Rectangle(p1, p1.add(p3p0), p1.add(p2p0)) );
-		rectList.add( new Rectangle(p2, p3.add(p2p0), p1.add(p2p0)) );
+		rectList.add( new Rectangle(p1.add(p3p0).add(p2p0), p2.add(p3p0), p1.add(p2p0)) );
 	}
 	
 	@Override
@@ -62,7 +64,7 @@ public class Box extends GeometricPrimitive {
 		IntersectioPoint rectInt = hit.getMinIntPoint();
 		if ( rectInt == null )
 			return null;
-		return new IntersectioPoint(this, rectInt.getLocation(), rectInt.getNormal());
+		return new IntersectioPoint(this, rectInt.getLocation(), rectInt.getNormal(), rectInt.getGeom());
 	}
 	
 	public List<Rectangle> getRectList() {
@@ -106,13 +108,14 @@ public class Box extends GeometricPrimitive {
 	}
 
 	@Override
-	public Vector getParam(Vector interPoint) {
-		for(Rectangle r : rectList){
-			if(r.pointOnRect(interPoint)){
-				return r.getParam(interPoint);
-			}
-		}
-		return null;
+	public Vector getTextureParam(Intersection hit) {
+//		for(Rectangle r : rectList){
+//			if(r.pointOnRect(hit.getMinIntPoint().getLocation())){
+//				return r.getTextureParam(hit);
+//			}
+//		}
+//		return null;
+		return hit.getMinIntPoint().getInnerPrimitive().getTextureParam(hit);
 	}
 
 }

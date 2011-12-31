@@ -1,6 +1,7 @@
 package GeometricPrimitives;
 
 import raytracer.IntersectioPoint;
+import raytracer.Intersection;
 import raytracer.Ray;
 import raytracer.Vector;
 
@@ -75,9 +76,15 @@ public class Sphere extends GeometricPrimitive {
 
 
 	@Override
-	public Vector getParam(Vector interPoint) {
-		// TODO Auto-generated method stub
-		return null;
+	public Vector getTextureParam(Intersection hit) {
+		Vector intPt = hit.getMinIntPoint().getLocation().substract(getCenter());
+		double u = Math.acos(intPt.getDoubleZ()/getRadius()) / Math.PI;
+		double theta = Math.atan2(intPt.getDoubleY(),intPt.getDoubleX());
+		double v;
+		if ( theta >= 0 )
+			v = theta / (2.0*Math.PI);
+		else
+			v = ((2.0*Math.PI) + theta) / (2.0*Math.PI);
+		return new Vector(u,v,0);
 	}
-
 }

@@ -1,5 +1,7 @@
 package Lights;
 
+import java.awt.image.BufferedImage;
+
 import org.eclipse.swt.graphics.ImageData;
 
 import raytracer.Intersection;
@@ -43,24 +45,26 @@ public abstract class Light {
 		}
 		else if (surface.getSurfaceType() ==  mtlType.TEXTURE){
 			
-			ImageData textureImg = surface.getTextureImg();
-			Vector paramVec = hit.getMinIntPoint().getGeom().getParam(hit.getMinIntPoint().getLocation());
-			int x = (int) (paramVec.getDoubleX() * textureImg.width);
-			int y = (int) (paramVec.getDoubleY() * textureImg.height);
-			if(x<0 || x>(textureImg.width-1) || y<0 || y>(textureImg.height-1)) {
-				Kd = new Vector(0,0,0);
-			} 
-			else {
-				int rgb = textureImg.getPixel(x, y);
-				double r = ((rgb & 0xFF0000)>>16);
-				double g = ((rgb & 0x00FF00)>>8 );
-				double b = (rgb & 0x0000FF);
+			BufferedImage textureImg = surface.getTextureImg();
+			Vector paramVec = hit.getMinIntPoint().getGeom().getTextureParam(hit);
+			int y = (int) (paramVec.getDoubleX() * (textureImg.getWidth()-1));
+			int x = (int) (paramVec.getDoubleY() * (textureImg.getHeight()-1));
+			//System.out.println("getting pixel at (" + x + ", " + y +") (paramVec:" + paramVec + ")");
+			int rgb = textureImg.getRGB(x, y);
+			double r = ((rgb & 0xFF0000)>>16);
+			double g = ((rgb & 0x00FF00)>>8 );
+			double b = (rgb & 0x0000FF);
 
-				Kd = new Vector(r,g,b).scalarMult(((double)1/255));
-			}
+			Kd = new Vector(r,g,b).scalarMult(1.0/255.0);
 		}
 		else if (surface.getSurfaceType() ==  mtlType.CHECKERS){
-			//TODO: everything
+			Vector paramVec = hit.getMinIntPoint().getGeom().getTextureParam(hit);
+			int u = (int)(paramVec.getDoubleX() / surface.getCheckersSize());
+			int v = (int)(paramVec.getDoubleY() / surface.getCheckersSize());
+			if ( (u+v) % 2 == 0) 
+				Kd = surface.getCheckersDiffuse2();
+			else
+				Kd = surface.getCheckersDiffuse1();
 		}
 		
 		Vector Ks = surface.getMtlSpecular();
