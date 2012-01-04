@@ -12,8 +12,6 @@ public class Intersection {
 		origin = rayOrigin;
 	}
 	
-	//private List<Vector> intPoints = new ArrayList<>();
-	//private List<GeometricPrimitive> intGeom =new ArrayList<>();
 	private List<IntersectioPoint> intData = new LinkedList<>();
 	private double minDist;
 	

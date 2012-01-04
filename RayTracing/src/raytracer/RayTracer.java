@@ -10,6 +10,10 @@ import org.eclipse.swt.widgets.*;
 
 public class RayTracer {
 
+	public static final int GL_NUM_RAYS = 200;
+	public static final int GL_MAX_DEPTH = 2;
+	public static final double GL_FACTOR = 0.4;
+
 	/**
 	 * @param args
 	 */

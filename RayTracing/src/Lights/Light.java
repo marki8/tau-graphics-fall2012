@@ -6,6 +6,7 @@ import org.eclipse.swt.graphics.ImageData;
 
 import raytracer.Intersection;
 import raytracer.Ray;
+import raytracer.RayTracer;
 import raytracer.Scene;
 import raytracer.Surface;
 import raytracer.Vector;
@@ -77,9 +78,10 @@ public abstract class Light {
 		if(VR<0) VR=0;
 		
 		// TODO: take in consideration the distance of the lighting 
-		double colorX = intensity.getX()*((Kd.getDoubleX()*NL) + (Ks.getDoubleX()*Math.pow(VR, n)));
-		double colorY = intensity.getY()*((Kd.getDoubleY()*NL) + (Ks.getDoubleY()*Math.pow(VR, n)));
-		double colorZ = intensity.getZ()*((Kd.getDoubleZ()*NL) + (Ks.getDoubleZ()*Math.pow(VR, n)));
+		//Kd= Kd.scalarMult(1.0-RayTracer.GL_FACTOR);
+		double colorX = intensity.getDoubleX()*((Kd.getDoubleX()*NL) + (Ks.getDoubleX()*Math.pow(VR, n)));
+		double colorY = intensity.getDoubleY()*((Kd.getDoubleY()*NL) + (Ks.getDoubleY()*Math.pow(VR, n)));
+		double colorZ = intensity.getDoubleZ()*((Kd.getDoubleZ()*NL) + (Ks.getDoubleZ()*Math.pow(VR, n)));
 		return new Vector(colorX,colorY,colorZ);
 	}
 	
