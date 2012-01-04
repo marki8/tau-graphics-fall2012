@@ -91,7 +91,7 @@ public class Scene {
 		for ( int i = 0 ; i < sups ; i++ ){
 			for ( int j = 0 ; j < sups ; j++ ) {
 				Ray ray = constructRayThroughPixel((double)x+((double)i/sups), (double)y+((double)j/sups));
-				Vector color = rayColor(ray, null, x, y);
+				Vector color = rayColor(ray, null, x, y,0);
 
 				
 				/*Intersection hit = findInteresction(this, ray);
@@ -131,20 +131,27 @@ public class Scene {
 		
 	}
 
-	private Vector rayColor(Ray ray, GeometricPrimitive originGeom, int x, int y) {
+	private Vector rayColor(Ray ray, GeometricPrimitive originGeom, int x, int y, int depth) {
 		Intersection hit = findInteresction(this, ray, originGeom);
 		Vector color = new Vector(0,0,0);
+		int dummy = 0;
+//		if ( depth >= RayTracer.GL_MAX_DEPTH )
+//			return color;
 		if ( hit.noIntersection() )
 		{
-			if(textureImg != null){
-				int rgb = textureImg.getPixel(x, y);
-				double r = ((rgb & 0xFF0000)>>16);
-				double g = ((rgb & 0x00FF00)>>8 );
-				double b = (rgb & 0x0000FF);
-
-				return(new Vector(r,g,b));
+			if ( depth == 0 ) {
+				if(textureImg != null){
+					int rgb = textureImg.getPixel(x, y);
+					double r = ((rgb & 0xFF0000)>>16);
+					double g = ((rgb & 0x00FF00)>>8 );
+					double b = (rgb & 0x0000FF);
+	
+					return(new Vector(r,g,b));
+				}
+				else return getBackgroundColor();
+			} else {
+				return color;
 			}
-			else return getBackgroundColor();
 		}
 		
 		for(Light l: lightList){
@@ -152,6 +159,34 @@ public class Scene {
 			color = color.add(impact);
 		}
 		
+		//TODO: add 50 random rays and call rayColor for each one. then aggregate and divide by (50*0.2)
+		// while the main light get 0.8
+		if( depth+1 < RayTracer.GL_MAX_DEPTH ) {
+			Vector globalVecColor = new Vector(0,0,0);
+			
+			if ( (x > width / 2) && (y > height/4) )
+				dummy = dummy+1;
+			int numHitRays = 0;
+			for(int i=0; i<RayTracer.GL_NUM_RAYS; i++) {
+				Ray randRay = getRandRay(hit);
+				double factor = randRay.getDirection().dotProduct(hit.getMinIntPoint().getNormal());
+				Vector rCol = rayColor(randRay,hit.getMinIntPoint().getGeom(),x,y,depth+1).scalarMult(factor);
+				if ( rCol.length() > 0.01 ) {
+					globalVecColor = globalVecColor.add(rCol);
+					numHitRays++;
+				}
+			}
+			if ( numHitRays > 0 ) {
+				globalVecColor = globalVecColor.scalarMult((1.0 / numHitRays)* RayTracer.GL_FACTOR);
+				Vector Kd = hit.getMinIntPoint().getGeom().getSurface().getMtlDiffuse();
+				double colorX = globalVecColor.getDoubleX()*(Kd.getDoubleX());
+				double colorY = globalVecColor.getDoubleY()*(Kd.getDoubleY());
+				double colorZ = globalVecColor.getDoubleZ()*(Kd.getDoubleZ());
+				color = color.add( new Vector(colorX,colorY,colorZ) );
+			}
+		}
+
+
 		double Ks = hit.getMinIntPoint().getGeom().getSurface().getReflectance(); 
 		if ( Ks > 0 ){
 			Vector refDir = 
@@ -159,7 +194,7 @@ public class Scene {
 							hit.getMinIntPoint().getNormal() );
 			Ray refl = new Ray(hit.getMinIntPoint().getLocation(), refDir);
 			color = color.add(
-					rayColor(refl, hit.getMinIntPoint().getGeom(), x, y)
+					rayColor(refl, hit.getMinIntPoint().getGeom(), x, y,0)
 					.scalarMult(Ks));
 		}
 		
@@ -176,6 +211,28 @@ public class Scene {
 		return color;
 	}
 	
+	private Ray getRandRay(Intersection hit) {
+		double normalFactor = Math.random();
+		double kFactor = (Math.random()-0.5)*2.0;
+		double lFactor = (Math.random()-0.5)*2.0;
+		
+		Vector normal = hit.getMinIntPoint().getNormal();
+		
+		Vector kVector = normal.crossProduct(new Vector(1,0,0));
+		if ( kVector.length() < 0.0001 ) // normal is parallel to X axis
+			kVector = normal.crossProduct(new Vector(0,1,0));
+		kVector = kVector.normalize();
+		Vector lVector = normal.crossProduct(kVector).normalize();
+		
+		Vector randVec = normal.scalarMult(normalFactor)
+				.add(kVector.scalarMult(kFactor))
+				.add(lVector.scalarMult(lFactor));
+		
+
+		Ray ray = new Ray(hit.getMinIntPoint().getLocation(), randVec);
+		return ray;
+	}
+
 	public static Intersection findInteresction(Scene scene, Ray ray) {
 //		Intersection intersection = new Intersection(ray.getOrigin());
 //		for ( GeometricPrimitive g : scene.geoList ) {
