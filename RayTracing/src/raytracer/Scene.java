@@ -188,7 +188,8 @@ public class Scene {
 
 
 		double Ks = hit.getMinIntPoint().getGeom().getSurface().getReflectance(); 
-		if ( Ks > 0 ){
+		
+		if ( Ks > 0 && depth+1 < RayTracer.GL_MAX_DEPTH){
 			Vector refDir = 
 					Vector.vectorReflection(ray.getDirection().scalarMult(-1), 
 							hit.getMinIntPoint().getNormal() );
