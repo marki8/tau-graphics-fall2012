@@ -37,6 +37,8 @@ public class Scene {
 	private double paneWidth;
 	private double paneHeight;
 	
+	int globalDepth=0;
+	
 	private ImageData textureImg = null;
 	
 	public Scene(int sceneHeight, int sceneWidth) {
@@ -90,6 +92,7 @@ public class Scene {
 		
 		for ( int i = 0 ; i < sups ; i++ ){
 			for ( int j = 0 ; j < sups ; j++ ) {
+				globalDepth = 0;
 				Ray ray = constructRayThroughPixel((double)x+((double)i/sups), (double)y+((double)j/sups));
 				Vector color = rayColor(ray, null, x, y,0);
 
@@ -161,7 +164,10 @@ public class Scene {
 		
 		//TODO: add 50 random rays and call rayColor for each one. then aggregate and divide by (50*0.2)
 		// while the main light get 0.8
-		if( depth+1 < RayTracer.GL_MAX_DEPTH ) {
+		
+		globalDepth++;
+		
+		if( globalDepth < RayTracer.GL_MAX_DEPTH ) {
 			Vector globalVecColor = new Vector(0,0,0);
 			
 			if ( (x > width / 2) && (y > height/4) )
@@ -170,7 +176,7 @@ public class Scene {
 			for(int i=0; i<RayTracer.GL_NUM_RAYS; i++) {
 				Ray randRay = getRandRay(hit);
 				double factor = randRay.getDirection().dotProduct(hit.getMinIntPoint().getNormal());
-				Vector rCol = rayColor(randRay,hit.getMinIntPoint().getGeom(),x,y,depth+1).scalarMult(factor);
+				Vector rCol = rayColor(randRay,hit.getMinIntPoint().getGeom(),x,y,globalDepth).scalarMult(factor);
 				if ( rCol.length() > 0.01 ) {
 					globalVecColor = globalVecColor.add(rCol);
 					numHitRays++;
@@ -189,7 +195,7 @@ public class Scene {
 
 		double Ks = hit.getMinIntPoint().getGeom().getSurface().getReflectance(); 
 		
-		if ( Ks > 0 && depth+1 < RayTracer.GL_MAX_DEPTH){
+		if ( Ks > 0){
 			Vector refDir = 
 					Vector.vectorReflection(ray.getDirection().scalarMult(-1), 
 							hit.getMinIntPoint().getNormal() );
