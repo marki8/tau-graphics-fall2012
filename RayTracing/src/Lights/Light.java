@@ -48,8 +48,8 @@ public abstract class Light {
 			
 			BufferedImage textureImg = surface.getTextureImg();
 			Vector paramVec = hit.getMinIntPoint().getGeom().getTextureParam(hit);
-			int y = (int) (paramVec.getDoubleX() * (textureImg.getWidth()-1));
-			int x = (int) (paramVec.getDoubleY() * (textureImg.getHeight()-1));
+			int x = (int) (paramVec.getDoubleX() * (textureImg.getWidth()-1));
+			int y = (int) (paramVec.getDoubleY() * (textureImg.getHeight()-1));
 			//System.out.println("getting pixel at (" + x + ", " + y +") (paramVec:" + paramVec + ")");
 			int rgb = textureImg.getRGB(x, y);
 			double r = ((rgb & 0xFF0000)>>16);
